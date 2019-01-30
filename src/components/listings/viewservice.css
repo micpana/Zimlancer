@@ -1,0 +1,152 @@
+.servicedetails{
+    margin-top: 4%;
+    width: 100%
+}
+.proddetails{
+    border: 1px solid rgba(102, 51, 153, 0.404);
+    margin-left: 4%;
+    margin-right: 1%;
+}
+.blwtitle{
+    color: rgba(0, 0, 0, 0.5);
+    /* text-align: right; */
+}
+.lightgreytext{
+    color: rgba(247, 247, 247, 0.5);
+}
+.serviceimage{
+    width: 100%;
+}
+.purpletext{
+    color:rebeccapurple;
+}
+.userdetails{
+    border: 1px solid rgba(102, 51, 153, 0.404);
+    margin-left: 1%;
+}
+.usrpropc{
+    width: 60%;
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+.inboxseller{
+    margin-top: 15px;
+    border: 1px solid rgba(102, 51, 153, 0.521);
+}
+.msgbtn{
+    color: rgba(0, 0, 0, 0.5);
+}
+.msgbtn:hover{
+    color: rebeccapurple;
+}
+.readmore{
+    color: rebeccapurple;
+}
+.readmore:hover{
+    color: rebeccapurple;
+}
+.fulldescription{
+    text-align: left;
+    
+
+}
+
+.descrcol{
+    border: 1px solid rgba(175, 133, 218, 0.404);
+margin: 10px;
+margin-right: 5px;
+}
+.packages{
+    border: 1px solid #af85da67;
+    margin: 10px;
+    margin-left: 5px;
+}
+.thehdn{
+    border-bottom: 1px solid #af85da67;
+
+}
+/* tabs */
+button:focus,
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none; }
+
+.tabs {
+    display: block;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: flex;
+    -webkit-flex-wrap: wrap;
+    -moz-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin: 0;
+    overflow: hidden; }
+    .tabs [class^="tab"] label,
+    .tabs [class*=" tab"] label {
+      color: rebeccapurple;
+      cursor: pointer;
+      display: block;
+      font-size: 15px;;
+      /* font-weight: 300;
+      line-height: 1em;
+      padding: 2rem 0; */
+      text-align: center; }
+    .tabs [class^="tab"] [type="radio"],
+    .tabs [class*=" tab"] [type="radio"] {
+      border-bottom: 1px solid grey;
+      cursor: pointer;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      display: block;
+      width: 100%;
+      -webkit-transition: all 0.3s ease-in-out;
+      -moz-transition: all 0.3s ease-in-out;
+      -o-transition: all 0.3s ease-in-out;
+      transition: all 0.3s ease-in-out; }
+      .tabs [class^="tab"] [type="radio"]:hover, .tabs [class^="tab"] [type="radio"]:focus,
+      .tabs [class*=" tab"] [type="radio"]:hover,
+      .tabs [class*=" tab"] [type="radio"]:focus {
+        border-bottom: 1px solid  rebeccapurple;}
+      .tabs [class^="tab"] [type="radio"]:checked,
+      .tabs [class*=" tab"] [type="radio"]:checked {
+        border-bottom: 2px solid rebeccapurple; }
+      .tabs [class^="tab"] [type="radio"]:checked + div,
+      .tabs [class*=" tab"] [type="radio"]:checked + div {
+        opacity: 1; }
+      .tabs [class^="tab"] [type="radio"] + div,
+      .tabs [class*=" tab"] [type="radio"] + div {
+        display: block;
+        opacity: 0;
+        padding: 2rem 0;
+        width: 100%;
+        -webkit-transition: all 0.3s ease-in-out;
+        -moz-transition: all 0.3s ease-in-out;
+        -o-transition: all 0.3s ease-in-out;
+        transition: all 0.3s ease-in-out; }
+    .tabs .tab-2 {
+      width: 50%; }
+      .tabs .tab-2 [type="radio"] + div {
+        width:200%;
+        margin-left: 200%; }
+      .tabs .tab-2 [type="radio"]:checked + div {
+        margin-left: 0; }
+      .tabs .tab-2:last-child [type="radio"] + div {
+        margin-left: 100%; }
+      .tabs .tab-2:last-child [type="radio"]:checked + div {
+        margin-left: -100%; }
+
+        #tabs-container{
+            font-family: "Roboto", Arial, Helvetica, sans-serif;
+            font-size: 16px;
+            font-weight: 300;
+            letter-spacing: 0.01em;
+            line-height: 1.6em;
+            /* margin: 0; */
+            /* padding: 100px;  */
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: -30px;
+        }
+   

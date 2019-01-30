@@ -1,0 +1,35 @@
+.footer{
+margin-top: 70px;
+}
+
+.logoimg{
+    width: 100%;
+}
+.playstore{
+width: 100%;
+}
+
+.approw{
+height: 8.5%;
+}
+
+.textcol{
+color: rgba(0, 0, 0, 0.5);
+}
+
+.ftitle{
+    margin-bottom: 20px;
+}
+.catrow{
+color: rgba(0, 0, 0, 0.5);
+text-align: left;
+}
+.catrow a{
+    color: rgba(0, 0, 0, 0.5);
+    text-align: left;
+    }
+    .catrow a:hover{
+        color: rgba(0, 0, 0, 0.5);
+        text-align: left;
+        }
+       

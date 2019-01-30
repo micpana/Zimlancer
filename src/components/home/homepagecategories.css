@@ -1,0 +1,14 @@
+.catim{
+    width: 20%;
+}
+
+.catheading{
+    padding-bottom: 50px;
+}
+.homcatlink{
+    color: #212529;
+}
+.homcatlink:hover {
+    color:#212529;
+    opacity: 0.9;
+}

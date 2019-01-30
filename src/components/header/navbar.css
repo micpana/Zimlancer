@@ -1,0 +1,25 @@
+.logo{
+    width: 15%;
+    margin-left: -200px;
+}
+
+.navsearch{
+    margin-left: -190px;
+
+}
+.statement{
+    font-size: 10px;
+    margin-left: -50%;
+}
+.sitename{
+    font-size: 20px;
+}
+.navbar{
+    box-shadow: 0 8px 16px 0 rgba(56, 98, 153, 0.24), 0 6px 20px 0 rgba(66, 56, 153, 0.24);
+
+}
+.navbutton1{
+    background-color: #6552b8;
+    
+}
+

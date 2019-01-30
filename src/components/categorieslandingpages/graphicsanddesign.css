@@ -1,0 +1,69 @@
+.grapimg{
+width: 100%;
+max-height: 190px;
+/* min-height: 190px; */
+}
+.piclink{
+    color: #212529;
+}
+.piclink:hover {
+    color: rgb(100, 82, 184);
+    opacity: 0.8;
+}
+
+.subcatrow{
+    color: rgba(0, 0, 0, 0.5);
+    text-align: left;
+    padding-left: 8%;
+}
+.subcatrow a{
+    color: rgba(0, 0, 0, 0.5);
+    text-align: left;
+    padding-left: 8%;
+}
+.subcatrow a:hover{
+    color: rgb(100, 82, 184);
+    text-align: left;
+    padding-left: 8%;
+}
+.subcatmaincat{
+    margin-bottom: 8%;
+}
+.grapheading{
+margin-bottom: 3%;
+margin-top: 2%;
+}
+/* services */
+
+.profpic{
+    width: 20%;
+}
+.pricing{
+    font-size: 10px;
+}
+.actualprice{
+    font-size: 15px;
+}
+.servicetitle{
+    font-size: 80%;
+}
+.mycard{
+    max-width: 225px;
+    
+   
+}
+.srvlst{
+    max-width: 100%;
+}
+.cardcol{
+  margin-left: 6px;
+  margin-right: 6px;
+  margin-bottom: 12px;
+}
+.lstlink{
+    color: #212529;
+}
+.lstlink:hover{
+    color: rgb(100, 82, 184);
+    opacity: 0.9;
+}

@@ -1,0 +1,15 @@
+
+.payheading{
+    margin-top: 80px;
+}
+.subheading{
+    margin-bottom: 30px;
+    color: rgba(0, 0, 0, 0.5);
+}
+.paytitle{
+    font-weight: 400;
+}
+
+.paydescr{
+    color: rgba(0, 0, 0, 0.5);
+}
