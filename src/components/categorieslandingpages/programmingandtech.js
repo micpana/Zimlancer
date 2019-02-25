@@ -26,7 +26,7 @@ import Wordpress from '../images/categories/programmingandtech/wordpress.jpg'
 <Col className="leftsidebar" xs="3">
 <h5 className="subcatmaincat">Programming & Tech</h5>
 <h6 className="subcatrow"><a href="/programmingandtech/Mobile Apps">Mobile Apps</a></h6>
-<h6 className="subcatrow"><a href="/programmingandtech/Website Development">Website Development</a></h6>
+<h6 className="subcatrow"><a href="/programmingandtech/Websites & Web Apps">Websites & Web Apps</a></h6>
 <h6 className="subcatrow"><a href="/programmingandtech/Desktop Applications">Desktop Applications</a></h6>
 <h6 className="subcatrow"><a href="/programmingandtech/Chatbots">Chatbots</a></h6>
 <h6 className="subcatrow"><a href="/programmingandtech/Ecommerce">Ecommerce</a></h6>

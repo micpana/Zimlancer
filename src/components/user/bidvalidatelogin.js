@@ -16,12 +16,17 @@ import UploadBidSignIn from './uploadbidsignin';
 import UploadBidCompleteProfile from './uploadbidcompleteprofile';
 import UploadBid from './uploadbid'
 import { delay } from 'q';
+import { withCookies, Cookies } from 'react-cookie';
+import { instanceOf } from 'prop-types';
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 
 
 
 
   class BidValidateLogin extends Component{
+    static propTypes = {
+      cookies: instanceOf(Cookies).isRequired
+  };
     constructor(props) {
       super(props);
   
@@ -32,12 +37,13 @@ registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
       };
 
        this.ValidateUpload = () =>{
+        const { cookies } = this.props;
         //////////////////////////////////////////////check if user is logged in
-      if(this.state.userid==""){
+      if(this.state.userid==null){
         return <UploadBidSignIn/>
       }else{
         axios.post(GRAPHQL_BASE_URL, {
-          query: print(GET_USER), variables: {id: localStorage.getItem('userId')}
+          query: print(GET_USER), variables: {id: cookies.get('userId')}
       }).then((result) => {
           this.setState({userDetails: result.data.data.getUser});
       
@@ -60,8 +66,8 @@ registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
     }
 
     componentDidMount() {
-      // this.setState({userid: ""})
-      this.setState({userid: localStorage.getItem('userId')})
+      const { cookies } = this.props;
+      this.setState({userid: cookies.get('userId')})
 
     }
 
@@ -80,4 +86,4 @@ registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 
   };
   
-  export default BidValidateLogin;
+  export default withCookies(BidValidateLogin);

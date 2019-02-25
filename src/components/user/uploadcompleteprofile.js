@@ -12,6 +12,7 @@ import 'filepond/dist/filepond.min.css';
 import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orientation';
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
+import { BACKEND_URL } from '../backendurl';
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 
   class UploadCompleteProfile extends Component{
@@ -110,7 +111,7 @@ handleSubmit(e) {
     <FilePond allowMultiple={true} 
                           name={"file"}
                           maxFiles={1} 
-                          server="http://localhost:3008/profileimage"
+                          server={BACKEND_URL+"profileimage"}
                           onupdatefiles={(fileItems) => {
                               // Set current file objects to this.state
                               this.setState({

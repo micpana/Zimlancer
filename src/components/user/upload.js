@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {InputGroup, InputGroupAddon, InputGroupText, Input, Col, Row, Form, Button, Label, Container} from 'reactstrap';
 import {GRAPHQL_BASE_URL} from '../graphql/BaseUrlComponent';
 import {UPLOAD_SERVICE} from '../graphql/MutationResolver';
-import {GET_USER} from '../graphql/QueryResolver';
+import {GET_USER, GET_ALL_CATEGORIES, GET_SUBCATEGORIES_BY_CATEGORY} from '../graphql/QueryResolver';
 import axios from 'axios';
 import {print} from 'graphql';
 import {FaRegClock, FaUserAlt, FaShippingFast, FaKey, FaClock} from 'react-icons/fa';
@@ -12,6 +12,7 @@ import 'filepond/dist/filepond.min.css';
 import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orientation';
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
+import {BACKEND_URL} from '../backendurl';
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 
   class Upload extends Component{
@@ -26,7 +27,7 @@ registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
         price: '',
         completiontime: '',
         description: "",
-        datelisted: "uhuhu",
+        datelisted: "",
         extras1: "",
         extras2: "",
         extras1price: '',
@@ -39,19 +40,21 @@ registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
         serviceDetails:{},
         files: [],
         filenames:[null, null, null],
-        userDetails: {}
+        userDetails: {},
+        allCategories: [],
+        subcategories: []
 
         
       };
       this.handleChange = this.handleChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
+      this.loadSubcategories = this.loadSubcategories.bind(this);
 
     }
 
     componentDidMount() {
       this.setState({userid: this.props.userid})
-      //get userdetails
-      axios.post(GRAPHQL_BASE_URL, {
+      axios.post(GRAPHQL_BASE_URL, {//////////get user
         query: print(GET_USER), variables: {id: this.props.userid}
     }).then((result) => {
         this.setState({userDetails: result.data.data.getUser});
@@ -60,6 +63,16 @@ registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
     }).catch(error => {
       console.log(error.response)
     });
+    axios.post(GRAPHQL_BASE_URL, {//////////get categories
+      query: print(GET_ALL_CATEGORIES)
+  }).then((result) => {
+      this.setState({allCategories: result.data.data.allCategories});
+      // console.log(this.state)
+  
+  }).catch(error => {
+    console.log(error.response)
+  });
+
   }
 
   handleChange(e) {
@@ -67,6 +80,10 @@ registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 }
 handleSubmit(e) {
   e.preventDefault()
+  var today = new Date();
+  var date = today.getFullYear()+'/'+(today.getMonth()+1)+'/'+today.getDate();
+  var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds() + ":" + today.getMilliseconds();
+  var dateTime = date+' '+time;
     axios.post(GRAPHQL_BASE_URL, {
       query: print(UPLOAD_SERVICE), variables: {
         name: this.state.name,
@@ -75,7 +92,7 @@ handleSubmit(e) {
         price: parseInt(this.state.price, 10),
         completiontime: parseInt(this.state.completiontime, 10),
         description: this.state.description,
-        datelisted: this.state.datelisted,
+        datelisted: dateTime,
         rating: 0,
         views: 0,
         datelisted: this.state.datelisted,
@@ -104,6 +121,16 @@ handleSubmit(e) {
   });
   };
 
+  loadSubcategories(e) {
+    axios.post(GRAPHQL_BASE_URL, {//////////get subcategories
+      query: print(GET_SUBCATEGORIES_BY_CATEGORY), variables: {parentcategory: e.target.id}
+  }).then((result) => {
+      this.setState({subcategories: result.data.data.getSubCategoryByCategory});  
+  }).catch(error => {
+    console.log(error.response)
+  });
+  }
+
     render() {
       return (
         <div ><br/>
@@ -123,7 +150,7 @@ handleSubmit(e) {
     <FilePond allowMultiple={true} 
                           name={"file"}
                           maxFiles={3} 
-                          server="http://localhost:3008/serviceimage"
+                          server={BACKEND_URL+"serviceimage"}
                           onupdatefiles={(fileItems) => {
                               // Set current file objects to this.state
                               this.setState({
@@ -171,7 +198,6 @@ handleSubmit(e) {
            <option key="Online" value="Online">Online</option>
 
            </select>
-            {/* <InputGroupAddon addonType="append">Days</InputGroupAddon> */}
     </InputGroup><br/>           
 
   </Col>
@@ -184,17 +210,11 @@ handleSubmit(e) {
         <InputGroupAddon addonType="prepend" style={{backgroundColor:'#e9ecef', border:'1px solid #ced4da'}}><IoIosAddCircle style={{margin:'10px'}}/></InputGroupAddon>
         <select className="form-control" name="maincategory" value={this.state.maincategory} 
                    onChange={this.handleChange}>
-           <option key="none" value="">--Select an option--</option>
-           <option key="Graphics & Design" value="Graphics & Design">Graphics & Design</option>
-
+                              <option key="none" value="">--Select an option--</option>
+           {this.state.allCategories.map((maincategory) => 
+           <option id={maincategory.category} key={maincategory.category} value={maincategory.category} onClick={this.loadSubcategories}>{maincategory.category}</option>)}
            </select>
     </InputGroup><br/> 
-           {/* <Label for="maincategory">Main category</Label> 
-           <select className="form-control" name="maincategory" value={this.state.maincategory} 
-                   onChange={this.handleChange}>
-           {this.state.cities.map((city) => 
-           <option key={city.value} value={city.value}>{city.display}</option>)}
-           </select><br/>  */}
               </Col>
               <Col>
               <Label for="subcategory">Sub category</Label> 
@@ -202,17 +222,11 @@ handleSubmit(e) {
         <InputGroupAddon addonType="prepend" style={{backgroundColor:'#e9ecef', border:'1px solid #ced4da'}}><IoIosArrowDropdownCircle style={{margin:'10px'}}/></InputGroupAddon>
         <select className="form-control" name="subcategory" value={this.state.subcategory} 
                    onChange={this.handleChange}>
-           <option key="none2" value="">--Select an option--</option>
-           <option key="Logo Design" value="Logo Design">Logo Design</option>
-
+                   <option key="none2" value="">--Select an option--</option>
+           {this.state.subcategories.map((subcategory) => 
+           <option key={subcategory.subcategory} value={subcategory.subcategory}>{subcategory.subcategory}</option>)}
            </select>
     </InputGroup><br/> 
-           {/* <Label for="subcategory">Sub category</Label> 
-           <select className="form-control" name="subcategory" value={this.state.subcategory} 
-                   onChange={this.handleChange}>
-           {this.state.cities.map((city) => 
-           <option key={city.value} value={city.value}>{city.display}</option>)}
-           </select><br/>  */}
               </Col>
         
   

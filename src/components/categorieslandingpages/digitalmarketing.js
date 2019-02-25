@@ -27,11 +27,11 @@ import Video from '../images/categories/digitalmarketing/video.jpg'
 
 <Col className="leftsidebar" xs="3">
 <h5 className="subcatmaincat">Digital Marketing</h5>
-<h6 className="subcatrow"><a href="/digitalmarketing/Search Engine Optimization">Search Engine Optimization</a></h6>
-<h6 className="subcatrow"><a href="/digitalmarketing/Social Media Marketing">Social Media Marketing</a></h6>
-<h6 className="subcatrow"><a href="/digitalmarketing/Email Marketing">Email Marketing</a></h6>
 <h6 className="subcatrow"><a href="/digitalmarketing/Video Marketing">Video Marketing</a></h6>
 <h6 className="subcatrow"><a href="/digitalmarketing/Influencer Marketing">Influencer Marketing</a></h6>
+<h6 className="subcatrow"><a href="/digitalmarketing/Social Media Marketing">Social Media Marketing</a></h6>
+<h6 className="subcatrow"><a href="/digitalmarketing/Email Marketing">Email Marketing</a></h6>
+<h6 className="subcatrow"><a href="/digitalmarketing/Search Engine Optimization">Search Engine Optimization</a></h6>
 <h6 className="subcatrow"><a href="/digitalmarketing/Music Promotion">Music Promotion</a></h6>
 </Col>
 <Col className="subcategories">

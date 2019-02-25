@@ -5,12 +5,20 @@ import {Row, CardDeck, Col,  Card, CardImg, CardText, CardBody,
   CardTitle, CardSubtitle, Button, CardGroup, Container} from 'reactstrap';
 import {GRAPHQL_BASE_URL} from '../graphql/BaseUrlComponent';
 import {GET_USER, GET_SERVICES_BY_USERID, GET_ORDERS_IN_QUEUE} from '../graphql/QueryResolver';
+import {ADD_PROFILE_VIEW} from '../graphql/MutationResolver';
 import axios from 'axios';
 import {print} from 'graphql';
 import StarRatings from 'react-star-ratings';
 import { FaRegEnvelope, FaFly } from 'react-icons/fa';
+import {BACKEND_URL} from '../backendurl';
+import MessagePopup from '../listings/messagepopup';
+import { withCookies, Cookies } from 'react-cookie';
+import { instanceOf } from 'prop-types';
 
   class Profile extends Component{
+    static propTypes = {
+      cookies: instanceOf(Cookies).isRequired
+  };
     constructor(props) {
       super(props);
   
@@ -22,6 +30,23 @@ ordersInQueue:[]
     }
 
     componentDidMount() {
+      const { cookies } = this.props;
+      var today = new Date();
+      var date = today.getFullYear()+'/'+(today.getMonth()+1)+'/'+today.getDate();
+      var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds() + ":" + today.getMilliseconds();
+      var dateTime = date+' '+time;
+      axios.post(GRAPHQL_BASE_URL, {//////add profile view
+        query: print(ADD_PROFILE_VIEW), variables: {
+          userid: this.props.match.params.userid,
+          viewerid: cookies.get('userId'),
+          date: dateTime
+        }
+    }).then((result) => {
+        this.setState({profileviews: result.data.data.addProfileView});
+
+    }).catch(error => {
+      console.log(error.response)
+  });
       axios.post(GRAPHQL_BASE_URL, {
           query: print(GET_USER), variables: {id: this.props.match.params.userid}
       }).then((result) => {
@@ -52,8 +77,8 @@ ordersInQueue:[]
 
     render() {
       const userServices = this.state.userServices.map((service, index) => {
-        const profileimage= "http://localhost:3008/images/profilepictures/"+ this.state.userDetails.profilepicturepath
-        const serviceimage="http://localhost:3008/images/services/"+service.imagepath1
+        const profileimage= BACKEND_URL+"images/profilepictures/"+ this.state.userDetails.profilepicturepath
+        const serviceimage=BACKEND_URL+"images/services/"+service.imagepath1
                 return<Row><a className="lstlink" href={"/"+service.maincategory+"/"+service.subcategory+"/"+service.id}><Col className="cardcol">
                 <Card className="mycard">
                 <CardImg top width="100%" src={serviceimage} alt="Card image cap" style={{maxHeight: '130px'}}/>
@@ -70,7 +95,7 @@ ordersInQueue:[]
             });
     const user=this.state.userDetails;
     const ordersInQueue=this.state.ordersInQueue.length;
-    const profileimage= "http://localhost:3008/images/profilepictures/"+ this.state.userDetails.profilepicturepath
+    const profileimage= BACKEND_URL+"images/profilepictures/"+ this.state.userDetails.profilepicturepath
 
       return (
         <Container><br/><br/>
@@ -89,8 +114,8 @@ ordersInQueue:[]
           name='userrating'
         /> 
         <h6 className="lightgreytext"><span className="purpletext">{user.rating}</span> from 0 reviews</h6>
-        <h6>{ordersInQueue} Orders in Queue</h6>
-      <a className="msgbtn" href="/messages/"><h6 className="inboxseller"><FaRegEnvelope color="rebeccapurple" size="20px"/> Inbox seller</h6></a>
+        <h6>{ordersInQueue} Orders in Queue</h6><br/>
+        <MessagePopup seller={user.id}/><br/>
       <Row className="lightgreytext">
             <Col><h6 style={{textAlign:'left'}}>Skills:</h6></Col>
             <Col><h6 style={{textAlign:'right'}}>{user.skills}</h6></Col>
@@ -134,4 +159,4 @@ ordersInQueue:[]
 
   };
   
-  export default Profile;
+  export default withCookies(Profile);

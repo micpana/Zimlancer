@@ -13,9 +13,14 @@ import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orien
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 import Loginpic from '../images/login.png'
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
+import { withCookies, Cookies } from 'react-cookie';
+import { instanceOf } from 'prop-types';
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 
   class UploadBidSignIn extends Component{
+    static propTypes = {
+      cookies: instanceOf(Cookies).isRequired
+  };
     constructor(props) {
       super(props);
   
@@ -39,7 +44,7 @@ registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
   this.setState({[e.target.name]: e.target.value});
 }
 handleSubmit(e) {
-  e.preventDefault()
+  const { cookies } = this.props;
     axios.post(GRAPHQL_BASE_URL, {
       query: print(USER_LOGIN), variables: {
       username: this.state.username,
@@ -47,19 +52,15 @@ handleSubmit(e) {
       }
   }).then((result) => {
     if(result.data.data.userLogin.length==1){
-      localStorage.setItem('userId', result.data.data.userLogin[0].id);
-      
-      let port = (window.location.port ? ':' + window.location.port : '');
-    window.location.href = '//' + window.location.hostname + port + '/postbid/';
+      cookies.set('userId', result.data.data.userLogin[0].id, { path: '/' });
     }else{
       alert('login failed')
     }
       
-  })
-//   .catch(error => {
-//     console.log(error.response);
-//     alert('An error has occured while trying to log you in ');
-//   });
+  }).catch(error => {
+    console.log(error.response);
+    alert('An error has occured while trying to log you in ');
+  });
   };
 
     render() {
@@ -111,4 +112,4 @@ handleSubmit(e) {
 
   };
   
-  export default UploadBidSignIn;
+  export default withCookies(UploadBidSignIn);

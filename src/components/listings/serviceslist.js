@@ -1,64 +1,81 @@
 import React, { Component } from 'react';
 import '../categorieslandingpages/graphicsanddesign.css';
 import {Row, CardDeck, Col,  Card, CardImg, CardText, CardBody,
-  CardTitle, CardSubtitle, Button, CardGroup} from 'reactstrap';
+  CardTitle, CardSubtitle, Button, CardGroup, Label, InputGroup} from 'reactstrap';
 import {GRAPHQL_BASE_URL} from '../graphql/BaseUrlComponent';
-import {GET_SERVICES_BY_SUBCATEGORY, GET_USER} from '../graphql/QueryResolver';
+import {BACKEND_URL} from '../backendurl';
+import {GET_SERVICES_BY_SUBCATEGORY, GET_USER, GET_BIDS_BY_SUBCATEGORY} from '../graphql/QueryResolver';
 import axios from 'axios';
 import {print} from 'graphql';
+import { runInThisContext } from 'vm';
+import Services from './services';
+import Bids from './bids';
 
   class ServicesList extends Component{
     constructor(props) {
       super(props);
   
       this.state = {
-servicesList:[],
-userDetails:{}
+currentview: "services"
       };
+      this.viewItem = this.viewItem.bind(this);
+      /////////view
+      this.CurrentView = () =>{
+        if(this.state.currentview=="services"){
+          return<Services subcategory={this.props.match.params.subcategory}/>
+        }
+        if(this.state.currentview=="bids"){
+          return<Bids subcategory={this.props.match.params.subcategory}/>
+        }
+     
+      }
+///////buttons
+      this.Buttons = () =>{
+if(this.state.currentview=="services"){
+  return   <Row>
+    <Col>
+    <Button id="services" onClick={this.viewItem} style={{backgroundColor: 'inherit', border: 'none', color: 'rebeccapurple', float: 'left'}}>Services</Button>
+  <Button id="bids" onClick={this.viewItem} style={{backgroundColor: 'inherit', border: 'none', color: 'grey', float: 'left'}}>Bids</Button>
+    </Col>
+    <Col sm="4">
+              <InputGroup style={{width: '50%', float: 'right', marginRight: '5%'}}>
+        <select className="form-control" name="sortby" value={this.state.sortby} 
+                   onChange={this.handleChange} style={{border: '1px solid rebeccapurple'}}>
+                              <option id="none" key="none" value="">-----Default-----</option>
+                      </select>
+    </InputGroup>
+    </Col>
+</Row>
+}
+if(this.state.currentview=="bids"){
+  return   <Row>
+  <Col>
+    <Button id="services" onClick={this.viewItem} style={{backgroundColor: 'inherit', border: 'none', color: 'grey', float: 'left'}}>Services</Button>
+  <Button id="bids" onClick={this.viewItem} style={{backgroundColor: 'inherit', border: 'none', color: 'rebeccapurple', float: 'left'}}>Bids</Button>
+    </Col>
+    <Col sm="4">
+              <InputGroup style={{width: '50%', float: 'right', marginRight: '5%'}}>
+        <select className="form-control" name="sortby" value={this.state.sortby} 
+                   onChange={this.handleChange} style={{border: '1px solid rebeccapurple'}}>
+                              <option id="none" key="none" value="">-----Default-----</option>
+                      </select>
+    </InputGroup>
+    </Col>
+</Row>
+}
+      }
     }
 
     componentDidMount() {
-      axios.post(GRAPHQL_BASE_URL, {
-          query: print(GET_SERVICES_BY_SUBCATEGORY), variables: {subcategory: this.props.match.params.subcategory}
-      }).then((result) => {
-          this.setState({servicesList: result.data.data.getServicesBySubcategory});
-console.log("kkkkkkkkkkkk", result.data.data.getServicesBySubcategory);
-      }).catch(error => {
-        console.log(error.response)
-    });
 
+ 
+
+  }
+  viewItem(e) {
+    this.setState({currentview: e.target.id});
   }
 
     render() {
-      const servicesList = this.state.servicesList.map((service, index) => {
-        axios.post(GRAPHQL_BASE_URL, {
-          query: print(GET_USER), variables: {id: service.userid}
-      }).then((result) => {
-          this.setState({userDetails: result.data.data.getUser});    
-      }).catch(error => {
-        console.log(error.response)
-    });
-
-const profileimage= "http://localhost:3008/images/profilepictures/"+this.state.userDetails.profilepicturepath
-const serviceimage="http://localhost:3008/images/services/"+service.imagepath1
-        return<Row><a className="lstlink" href={"/"+service.maincategory+"/"+service.subcategory+"/"+service.id}><Col className="cardcol">
-        <Card className="mycard">
-        <CardImg top width="100%" src={serviceimage} alt="Card image cap" style={{maxHeight: '130px'}}/>
-        <CardBody>
-          <CardTitle><img className="profpic" src={profileimage} style={{borderRadius:'50%'}}/>   {service.username}</CardTitle>
-          <CardText className="servicetitle">{service.name}</CardText>
-          <CardSubtitle className="pricing">Starting at: <span className="actualprice">${service.price}</span></CardSubtitle>
-        </CardBody>
-      </Card>
-</Col></a>
-        </Row>
-      
- 
-
-
-    });
-
-
 
       return (
         <div className="graphics">
@@ -73,9 +90,10 @@ const serviceimage="http://localhost:3008/images/services/"+service.imagepath1
 
 </Col>
 <Col className="subcategories">
-        
+<this.Buttons/>
+<br/>
            <Row className="srvlst">
-{servicesList}
+<this.CurrentView/>
            </Row>
 
         </Col>

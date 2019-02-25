@@ -267,4 +267,150 @@ export const CREATE_SERVICE_BID=gql` mutation createServiceBid(
   }
 }`;
 
+export const SEND_MESSAGE=gql` mutation createMessage(
+  $sender: String!,
+  $receiver: String!,
+  $message: String!,
+  $date: String!,
+  $filepath1: String,
+  $filepath2: String,
+  $filepath3: String,
+  $read: String!
+){
+createMessage(input: {
+  sender: $sender
+  receiver: $receiver
+  message: $message
+  date: $date
+  filepath1: $filepath1
+  filepath2: $filepath2
+  filepath3: $filepath3
+  read: $read
+}){
+  id
+  sender
+  receiver
+  message
+  date
+  filepath1
+  filepath2
+  filepath3
+  read
+}
+}`;
 
+export const ADD_PROFILE_VIEW=gql` mutation addProfileView(
+  $userid: String!,
+  $viewerid: String,
+  $date: String!
+){
+addProfileView(input: {
+  userid: $userid
+  viewerid: $viewerid
+  date: $date
+}){
+    id
+    userid
+    viewerid
+    date
+}
+}`;
+
+export const ADD_INTEREST=gql` mutation createInterests(
+  $userid: String
+  $maincategory: String!
+  $subcategory: String!
+  $date: String!
+  $serviceid: String
+  $sellerid: String
+){
+createInterests(input: {
+    userid: $userid
+    maincategory: $maincategory
+    subcategory: $subcategory
+    date: $date
+    serviceid: $serviceid
+    sellerid: $sellerid
+}){
+  userid
+  maincategory
+  subcategory
+  date
+  serviceid
+  sellerid
+}
+}`;
+
+export const ADD_CATEGORY=gql` mutation createCategory(
+  $category: String!,
+){
+  createCategory(input: {
+    category: $category
+  }){
+    id
+    category
+  }
+}`;
+
+export const ADD_SUBCATEGORY=gql` mutation createSubCategory(
+  $parentcategory: String!,
+  $subcategory: String!
+){
+  createSubCategory(input: {
+parentcategory: $parentcategory
+subcategory: $subcategory
+  }){
+    id
+    parentcategory
+    subcategory
+  }
+}`;
+
+export const UPDATE_TRANSACTION_FEE=gql` mutation updateTransactionFee(
+ $id: ID!,
+ $fixedamount: Int!,
+ $percentage: Int!
+){
+  updateTransactionFee(id: $id, input: {
+    fixedamount: $fixedamount
+    percentage: $percentage
+  }){
+    id
+    fixedamount
+    percentage
+  }
+}`;
+
+export const ADD_REFERRAL=gql` mutation addReferral(
+  $userid: String!,
+  $referredby: String!,
+  $date: String!
+ ){
+  addReferral(input: {
+    userid: $userid
+    referredby: $referredby
+    date: $date
+  }){
+    id
+    userid
+    referredby
+    date
+  }
+ }`;
+
+ export const ADD_REFERRAL_CLICK=gql` mutation addReferralClicks(
+  $userid: String,
+  $referredby: String!,
+  $date: String!
+ ){
+  addReferralClicks(input: {
+    userid: $userid
+    referredby: $referredby
+    date: $date
+  }){
+    id
+    userid
+    referredby
+    date
+  }
+ }`;

@@ -66,7 +66,7 @@ console.log(error.response)
      <div id="porcion2" class="recorte"><div class="quesito mac" data-rel="39"></div></div>
      <div id="porcion3" class="recorte"><div class="quesito win" data-rel="31"></div></div>
      <div id="porcionFin" class="recorte"><div class="quesito linux" data-rel="9"></div></div>
-                            <p class="center-date"><span className="numarea">{this.state.services.length}</span><br/><br/><span class="scnd-font-color">Listings</span> <span className="numarea"></span></p>        
+                            <p class="center-date"><span className="numarea">{this.state.services.length}</span><br/><br/><span class="scnd-font-color">Services</span> <span className="numarea"></span></p>        
                     </div>
                 </div>
                 </div></Col>

@@ -4,21 +4,34 @@ import {Collapse,Navbar,NavbarToggler,NavbarBrand,Nav,NavItem,NavLink,Uncontroll
   import logo from '../images/logo_transparent.png';
   import './navbar.css';
   import {FaSearch} from 'react-icons/fa';
+  import {GRAPHQL_BASE_URL} from '../graphql/BaseUrlComponent';
+import {GET_USER} from '../graphql/QueryResolver';
+import axios from 'axios';
+import {print} from 'graphql';
+import { BACKEND_URL } from '../backendurl';
+import { withCookies, Cookies } from 'react-cookie';
+import { instanceOf } from 'prop-types';
+
 
 
   class NavBar extends Component{
+    static propTypes = {
+      cookies: instanceOf(Cookies).isRequired
+  };
     constructor(props) { 
       super(props);
       this.toggle = this.toggle.bind(this);
       this.state = {
         isOpen: false,
-        userid: ""
+        userid: "",
+        userDetails: {}
       };
       this.Logout = () =>{
-        localStorage.setItem('userId', "");
+        const { cookies } = this.props;
+        cookies.remove('userId', { path: '/' });
       };
       this.ValidateLogin = () =>{
-if(this.state.userid==""){
+if(this.state.userid==null){
   return<div>
     <Row>
       <Col >
@@ -44,14 +57,19 @@ if(this.state.userid==""){
   </Col>
     <Col>
     <NavItem>
-                  <NavLink href="/">Orders</NavLink>
+                  <NavLink href="/dashboard/orders">Orders</NavLink>
                 </NavItem> 
     </Col>
     <Col>
     <NavItem>
-                  <NavLink href="/">Dashboard</NavLink>
+                  <NavLink href="/dashboard/">Dashboard</NavLink>
                 </NavItem> 
     </Col>
+    {/* <Col>
+  <NavItem>
+                  <NavLink onClick={this.Logout} href="/login/" style={{fontSize: '10px'}}>Hello, {this.state.userDetails.username}</NavLink>
+                </NavItem>
+    </Col> */}
     <Col>
   <NavItem>
                   <NavLink onClick={this.Logout} href="/login/">Logout</NavLink>
@@ -65,19 +83,16 @@ if(this.state.userid==""){
     }
 
     componentDidMount() {
-this.setState({userid: localStorage.getItem('userId')})
-// //reload page once
-// if( window.localStorage )
-// {
-//   if( !localStorage.getItem( 'firstLoad' ) )
-//   {
-//     localStorage[ 'firstLoad' ] = true;
-//     window.location.reload();
-//   }  
+      const { cookies } = this.props;
+      this.setState({userid: cookies.get('userId')})
+axios.post(GRAPHQL_BASE_URL, {
+  query: print(GET_USER), variables: {id: cookies.get('userId')}
+}).then((result) => {
+  this.setState({userDetails: result.data.data.getUser});
 
-//   else
-//     localStorage.removeItem( 'firstLoad' );
-// }
+}).catch(error => {
+console.log(error.response)
+});
 
 
 
@@ -123,4 +138,4 @@ this.setState({userid: localStorage.getItem('userId')})
 
   };
   
-  export default NavBar;
+  export default withCookies(NavBar);

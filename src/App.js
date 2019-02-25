@@ -19,11 +19,20 @@ import Registration from './components/user/registration'
 import Login from './components/user/login'
 import PostBid from './components/user/bidvalidatelogin'
 import Messages from './components/user/messages'
+import Dashboard from './components/user/dashboard'
+import Dashboard2 from './components/user/dashboard2'
+import ViewBid from './components/listings/viewbid'
+import ReferralRegistration from './components/user/referralregistration'
+import { withCookies, Cookies } from 'react-cookie';
+import { instanceOf } from 'prop-types';
 
 
 import { BrowserRouter, Route, Switch, withRouter } from 'react-router-dom';
 
 class App extends Component {
+  static propTypes = {
+    cookies: instanceOf(Cookies).isRequired
+};
   render() {
     return (
       <div className="App">
@@ -54,6 +63,14 @@ class App extends Component {
                         <Route path='/login/' exact={true} component={Login}/>
                         <Route path='/postbid/' exact={true} component={PostBid}/>
                         <Route path='/messages/' exact={true} component={Messages}/>
+                        <Route path='/dashboard/' exact={true} component={Dashboard}/>
+                        <Route path='/dashboard/:currentview' exact={true} component={Dashboard2}/>
+                        <Route path='/bids/:maincategory/:subcategory/:bidid' exact={true} component={ViewBid}/>
+                        <Route path='/ref/:referredby' exact={true} component={ReferralRegistration}/>
+                        
+
+                        
+
 
 
                 
@@ -69,4 +86,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withCookies(App);

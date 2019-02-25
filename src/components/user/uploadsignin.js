@@ -13,9 +13,14 @@ import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orien
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 import Loginpic from '../images/login.png'
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
+import { withCookies, Cookies } from 'react-cookie';
+import { instanceOf } from 'prop-types';
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 
   class UploadSignIn extends Component{
+    static propTypes = {
+      cookies: instanceOf(Cookies).isRequired
+  };
     constructor(props) {
       super(props);
   
@@ -39,7 +44,7 @@ registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
   this.setState({[e.target.name]: e.target.value});
 }
 handleSubmit(e) {
-  e.preventDefault()
+  const { cookies } = this.props;
     axios.post(GRAPHQL_BASE_URL, {
       query: print(USER_LOGIN), variables: {
       username: this.state.username,
@@ -47,8 +52,7 @@ handleSubmit(e) {
       }
   }).then((result) => {
     if(result.data.data.userLogin.length==1){
-      localStorage.setItem('userId', result.data.data.userLogin[0].id);
-      this.props.history.push("/");
+      cookies.set('userId', result.data.data.userLogin[0].id, { path: '/' });
     }else{
       alert('login failed')
     }
@@ -108,4 +112,4 @@ handleSubmit(e) {
 
   };
   
-  export default UploadSignIn;
+  export default withCookies(UploadSignIn);
