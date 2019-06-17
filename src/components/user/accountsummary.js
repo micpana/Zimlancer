@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {Row, CardDeck, Col,  Card, CardImg, CardText, CardBody,
   CardTitle, CardSubtitle, Button, CardGroup, Label, InputGroup, InputGroupAddon, Input, Container} from 'reactstrap';
 import {GRAPHQL_BASE_URL} from '../graphql/BaseUrlComponent';
-import {GET_SERVICES_BY_USERID, GET_WON_BIDS, GET_COMPLETED_ORDERS, GET_WITHDRAWAL_HISTORY_BY_USERID, GET_PROFILE_VIEWS_BY_USERID, GET_AMOUNT_SPENT, GET_BIDS_BY_USERID, GET_USER, GET_LISTING_VIEWS_BY_USERID, GET_USER_BALANCE} from '../graphql/QueryResolver';
+import {GET_SERVICES_BY_USERID, GET_REFERRALS_BY_USERNAME, GET_COMMISSIONS_BY_USERID, GET_WON_BIDS, GET_COMPLETED_ORDERS, GET_WITHDRAWAL_HISTORY_BY_USERID, GET_PROFILE_VIEWS_BY_USERID, GET_AMOUNT_SPENT, GET_BIDS_BY_USERID, GET_USER, GET_LISTING_VIEWS_BY_USERID, GET_USER_BALANCE} from '../graphql/QueryResolver';
 import axios from 'axios';
 import {print} from 'graphql';
 import StarRatings from 'react-star-ratings';
@@ -34,7 +34,9 @@ import { instanceOf } from 'prop-types';
         amountSpent: [],
         withdrawalHistory: [],
         completedOrders: [],
-        wonBids: []
+        wonBids: [],
+        earnedCommissions: [],
+        getReferralsByUsername: []
 
       };
 
@@ -81,7 +83,15 @@ axios.post(GRAPHQL_BASE_URL, {/////////get amountreceived
         query: print(GET_USER), variables: {id: cookies.get('userId')}
     }).then((result) => {
         this.setState({userDetails: result.data.data.getUser});
-    
+        axios.post(GRAPHQL_BASE_URL, {//////get referrals
+            query: print(GET_REFERRALS_BY_USERNAME), variables: {
+                referredby: result.data.data.getUser.username
+            }
+        }).then((result) => {
+          this.setState({getReferralsByUsername: result.data.data.getReferralsByUsername});
+        }).catch(error => {
+          console.log(error.response);
+        }); 
     }).catch(error => {
       console.log(error.response)
     });
@@ -130,6 +140,15 @@ axios.post(GRAPHQL_BASE_URL, {/////////get amountreceived
       }).catch(error => {
       console.log(error.response)
       });
+          //////////// get earned commissions
+    axios.post(GRAPHQL_BASE_URL, {
+        query: print(GET_COMMISSIONS_BY_USERID), variables: {userid: cookies.get('userId')}
+      }).then((result) => {
+        this.setState({earnedCommissions: result.data.data.getCommissionsByUserId});
+      
+      }).catch(error => {
+      console.log(error.response)
+      });
 
   }
 
@@ -137,19 +156,12 @@ axios.post(GRAPHQL_BASE_URL, {/////////get amountreceived
 
     render() {
         var user = this.state.userDetails
-        var amountreceived = 0
-        const amntRec = this.state.userBalance.map((amountrc, index) => {/// total amount earned
-        amountreceived=amountreceived+amountrc.price
-        })
-        var amountspent = 0
-        const amountCal = this.state.amountSpent.map((amount, index) => {///total amount spent
-        amountspent=amountspent+amount.price
-        })
-        var amountwithdrawn = 0
-        const amountWithdrawn = this.state.withdrawalHistory.map((withdrawal, index) => {///get all amount received
-        amountwithdrawn=amountwithdrawn+withdrawal.amount
-        })
-        var currentbalance=amountreceived-amountwithdrawn
+        const amountreceivedinsales = this.state.userBalance.reduce((acc, amount) => acc + amount.price, 0);
+        const amountspent = this.state.amountSpent.reduce((acc, amount) => acc + amount.price, 0);
+        const amountwithdrawn = this.state.withdrawalHistory.reduce((acc, amount) => acc + amount.amount, 0);
+        const earnedcommissions = this.state.earnedCommissions.reduce((acc, amount) => acc + amount.commission, 0);
+    const totalEarned= amountreceivedinsales + earnedcommissions;
+        var currentbalance=totalEarned-amountwithdrawn
 
         var today = new Date();
     var date = today.getFullYear()+'/'+(today.getMonth()+1)+'/'+today.getDate();
@@ -211,10 +223,18 @@ axios.post(GRAPHQL_BASE_URL, {/////////get amountreceived
 </Row>
 <Row>
     <Col style={{textAlign: 'left'}}>
-    <h6>Total Amount Earned:</h6>
+    <h6>Total Amount Earned In Sales:</h6>
     </Col>
     <Col style={{textAlign: 'right'}} xs="2">
-    ${amountreceived}
+    ${amountreceivedinsales}
+    </Col>
+</Row>
+<Row>
+    <Col style={{textAlign: 'left'}}>
+    <h6>Earned In Referral Commissions:</h6>
+    </Col>
+    <Col style={{textAlign: 'right'}} xs="2">
+    ${earnedcommissions}
     </Col>
 </Row>
 <Row>
@@ -243,10 +263,10 @@ axios.post(GRAPHQL_BASE_URL, {/////////get amountreceived
 </Row>
 <Row>
     <Col style={{textAlign: 'left'}}>
-    <h6>Your Referrals:</h6>
+    <h6>Your Registered Referrals:</h6>
     </Col>
     <Col style={{textAlign: 'right'}} xs="2">
-    0
+    {this.state.getReferralsByUsername.length}
     </Col>
 </Row>
 </Col>

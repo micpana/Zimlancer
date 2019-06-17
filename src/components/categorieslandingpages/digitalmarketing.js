@@ -7,7 +7,9 @@ import Music from '../images/categories/digitalmarketing/music.jpg'
 import Seo from '../images/categories/digitalmarketing/seo.jpg'
 import Social from '../images/categories/digitalmarketing/social.jpg'
 import Video from '../images/categories/digitalmarketing/video.jpg'
-
+import {FaMoneyBillAlt} from 'react-icons/fa';
+import { SocialIcon } from 'react-social-icons';
+import ReferAndEarn from '../images/referandearn.png'
 
 
   class DigitalMarketing extends Component{
@@ -22,7 +24,31 @@ import Video from '../images/categories/digitalmarketing/video.jpg'
     render() {
       return (
         <div className="graphics">
-        <h2 className="grapheading">Digital Marketing</h2>
+     <Row style={{marginTop: '2%', marginBottom: '2%'}}>
+          <Col>
+          <h6 style={{color: 'rebeccapurple', textAlign: 'left', marginLeft: '6%'}}>Follow us on social media</h6>
+          <Row style={{marginLeft: '2%'}}>
+            <Col xs="1">
+            <SocialIcon url="https://www.instagram.com/zimlancer" style={{ height: 25, width: 25 }}/>
+            </Col>
+            <Col xs="1">
+            <SocialIcon url="https://www.facebook.com/zimlancerZW/" style={{ height: 25, width: 25 }}/>
+            </Col>
+            <Col xs="1">
+            <SocialIcon url="https://twitter.com/zimlancer" style={{ height: 25, width: 25 }}/>
+            </Col>
+            <Col xs="1">
+            <SocialIcon url="https://plus.google.com/101601834693120746253" style={{ height: 25, width: 25 }}/>
+            </Col>
+          </Row>
+          </Col>
+ <Col>
+ <h2>Digital Marketing</h2>
+          </Col>
+          <Col>
+          <a href="/dashboard/referralsystem"><h6 style={{color: 'rebeccapurple', marginTop: '10px', float: 'right', paddingRight: '15px'}}><FaMoneyBillAlt color="rebeccapurple" size="30px"/> Refer and earn</h6></a>
+          </Col>
+        </Row>
         <Row className="mainrow">
 
 <Col className="leftsidebar" xs="3">
@@ -33,6 +59,8 @@ import Video from '../images/categories/digitalmarketing/video.jpg'
 <h6 className="subcatrow"><a href="/digitalmarketing/Email Marketing">Email Marketing</a></h6>
 <h6 className="subcatrow"><a href="/digitalmarketing/Search Engine Optimization">Search Engine Optimization</a></h6>
 <h6 className="subcatrow"><a href="/digitalmarketing/Music Promotion">Music Promotion</a></h6>
+<br/>
+<a href="/dashboard/referralsystem"><img src={ReferAndEarn} style={{width: '90%'}}/></a>
 </Col>
 <Col className="subcategories">
         <Row>

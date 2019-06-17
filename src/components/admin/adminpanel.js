@@ -15,6 +15,7 @@ import AllWithdrawalHistory from './withdrawalhistory'
 import TransactionFees from './transactionfees'
 import FeaturedServices from './featuredservices'
 import SiteSummary from './sitesummary'
+import ReferralSystem from './referralprogram'
 import { withCookies, Cookies } from 'react-cookie';
 import { instanceOf } from 'prop-types';
 
@@ -26,7 +27,8 @@ import { instanceOf } from 'prop-types';
       super(props);
   
       this.state = {
-currentview: "managecategories"
+currentview: "sitesummary",
+userDetails: {}
       };
       this.viewItem = this.viewItem.bind(this);
 
@@ -56,8 +58,11 @@ if(this.state.currentview=="transactionfees"){
 if(this.state.currentview=="withdrawalhistory"){
     return<AllWithdrawalHistory/>
   }
-  if(this.state.currentview=="allusers"){
+if(this.state.currentview=="allusers"){
     return<AllUsers/>
+  }
+  if(this.state.currentview=="referralsystem"){
+    return<ReferralSystem/>
   }
       }
       //////////////dashboard view
@@ -67,13 +72,18 @@ if(this.state.currentview=="withdrawalhistory"){
                     let port = (window.location.port ? ':' + window.location.port : '');
                     window.location.href = '//' + window.location.hostname + port + '/login/';
                  }else{
+                  //  if(this.state.userDetails.access!="admin"){
+                  //   let port = (window.location.port ? ':' + window.location.port : '');
+                  //   window.location.href = '//' + window.location.hostname + port + '/login/';
+                  //  }else{
                      return<div>
                        <Row>
                      <Container>
                      <Row style={{borderBottom: '1px solid grey'}}>
+                     <Button id="sitesummary" onClick={this.viewItem}  style={{backgroundColor: 'inherit', border: 'none', color: 'rebeccapurple'}}>Site Summary</Button><br/>
+                     <Button id="referralsystem" onClick={this.viewItem}  style={{backgroundColor: 'inherit', border: 'none', color: 'rebeccapurple'}}>Referral System</Button><br/>
                      <Button id="managecategories" onClick={this.viewItem} style={{backgroundColor: 'inherit', border: 'none', color: 'rebeccapurple'}}>Manage Categories</Button><br/>
                      <Button id="featuredservices" onClick={this.viewItem}  style={{backgroundColor: 'inherit', border: 'none', color: 'rebeccapurple'}}>Featured Services</Button><br/>
-                     <Button id="sitesummary" onClick={this.viewItem}  style={{backgroundColor: 'inherit', border: 'none', color: 'rebeccapurple'}}>Site Summary</Button><br/>
                      <Button id="sendmessages" onClick={this.viewItem}  style={{backgroundColor: 'inherit', border: 'none', color: 'rebeccapurple'}}>Send Messages</Button><br/>
                      <Button id="sendnotifications" onClick={this.viewItem}  style={{backgroundColor: 'inherit', border: 'none', color: 'rebeccapurple'}}>Send Notifications</Button><br/>
                      <Button id="alltransactionhistory" onClick={this.viewItem}  style={{backgroundColor: 'inherit', border: 'none', color: 'rebeccapurple'}}>All Transaction History</Button><br/>
@@ -94,7 +104,15 @@ if(this.state.currentview=="withdrawalhistory"){
     }
 
     componentDidMount() {
-     
+      const { cookies } = this.props;
+      axios.post(GRAPHQL_BASE_URL, {
+          query: print(GET_USER), variables: {id: cookies.get('userId')}
+      }).then((result) => {
+          this.setState({userDetails: result.data.data.getUser});
+      
+      }).catch(error => {
+        console.log(error.response)
+      }); 
   }
 
   viewItem(e) {

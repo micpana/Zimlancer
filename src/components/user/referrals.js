@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {Row, CardDeck, Col, Container, Card, CardImg, CardText, CardBody,
   CardTitle, CardSubtitle, Button, CardGroup, Label, InputGroup, InputGroupAddon, Input} from 'reactstrap';
 import {GRAPHQL_BASE_URL} from '../graphql/BaseUrlComponent';
-import {GET_REFERRALS_BY_USERNAME, GET_USER, GET_REFERRAL_CLICKS_BY_USERNAME} from '../graphql/QueryResolver';
+import {GET_REFERRALS_BY_USERNAME, GET_COMMISSIONS_BY_USERID, GET_USER, GET_REFERRAL_CLICKS_BY_USERNAME} from '../graphql/QueryResolver';
 import axios from 'axios';
 import {print} from 'graphql';
 import StarRatings from 'react-star-ratings';
@@ -73,7 +73,8 @@ import { instanceOf } from 'prop-types';
       this.state = {
         getReferralsByUsername:  [],
         userDetails: {},
-        referralClicks: []
+        referralClicks: [],
+        earnedCommissions: []
       };
    
     }
@@ -105,9 +106,19 @@ import { instanceOf } from 'prop-types';
         }).catch(error => {
           console.log(error.response)
         });
+            //////////// get earned commissions
+    axios.post(GRAPHQL_BASE_URL, {
+      query: print(GET_COMMISSIONS_BY_USERID), variables: {userid: cookies.get('userId')}
+    }).then((result) => {
+      this.setState({earnedCommissions: result.data.data.getCommissionsByUserId});
+    
+    }).catch(error => {
+    console.log(error.response)
+    });
   }
 
     render() {
+      const earnedcommissions = this.state.earnedCommissions.reduce((acc, amount) => acc + amount.commission, 0);
       var today = new Date();
       var date = today.getFullYear()+'/'+(today.getMonth()+1)+'/'+today.getDate();
         const clicksFromRegisteredUsers = this.state.referralClicks.filter(click => click.userid != null);
@@ -162,7 +173,7 @@ import { instanceOf } from 'prop-types';
     </Col>
     <Col>
     <div style={{border: '3px solid rgba(102, 51, 153, 0.404)', borderRadius: '50%', width: '120px', height: '120px'}}>
-                            <div style={{marginTop: '30px'}}>$0<br/>Commissions</div>
+                            <div style={{marginTop: '30px'}}>${earnedcommissions}<br/>Commissions</div>
                             </div>
     </Col>
 </Row>

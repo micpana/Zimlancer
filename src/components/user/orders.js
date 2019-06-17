@@ -28,7 +28,7 @@ yourPendingOrders: []
 
     componentDidMount() {
       const { cookies } = this.props;
-     //////////// get completed orders
+     //////////// get orders you've completed
     axios.post(GRAPHQL_BASE_URL, {
         query: print(GET_COMPLETED_ORDERS), variables: {sellerid: cookies.get('userId'), completed: "true"}
       }).then((result) => {
@@ -37,7 +37,16 @@ yourPendingOrders: []
       }).catch(error => {
       console.log(error.response)
       });
-      //////////// get orders made and completed
+              //////////// get orders you haven't completed yet
+    axios.post(GRAPHQL_BASE_URL, {
+      query: print(GET_COMPLETED_ORDERS), variables: {sellerid: cookies.get('userId'), completed: "false"}
+    }).then((result) => {
+      this.setState({pendingOrders: result.data.data.getCompletedJobs});
+    
+    }).catch(error => {
+    console.log(error.response)
+    });
+      //////////// get orders you've made and have been completed
     axios.post(GRAPHQL_BASE_URL, {
         query: print(GET_ORDERED_JOBS), variables: {userid: cookies.get('userId'), completed: "true"}
       }).then((result) => {
@@ -46,16 +55,7 @@ yourPendingOrders: []
       }).catch(error => {
       console.log(error.response)
       });
-         //////////// get pending orders
-    axios.post(GRAPHQL_BASE_URL, {
-        query: print(GET_COMPLETED_ORDERS), variables: {sellerid: cookies.get('userId'), completed: "false"}
-      }).then((result) => {
-        this.setState({pendingOrders: result.data.data.getCompletedJobs});
-      
-      }).catch(error => {
-      console.log(error.response)
-      });
-      //////////// get orders made and still pending
+      //////////// get you've made and haven't been completed
     axios.post(GRAPHQL_BASE_URL, {
         query: print(GET_ORDERED_JOBS), variables: {userid: cookies.get('userId'), completed: "false"}
       }).then((result) => {
@@ -71,33 +71,33 @@ yourPendingOrders: []
         const completedOrders = this.state.completedOrders.map(order => {
             return <tr>
               <td style={{whiteSpace: 'nowrap'}}>{order.servicename}</td>
-              <td style={{whiteSpace: 'nowrap'}}>{order.price}</td>
+              <td style={{whiteSpace: 'nowrap'}}>${order.price}</td>
               <td style={{whiteSpace: 'nowrap'}}>{order.date}</td>
-              <td style={{whiteSpace: 'nowrap'}}>{order.sellerid}</td>
+              <td style={{whiteSpace: 'nowrap'}}>{order.sellername}</td>
             </tr>
           });
           const yourCompletedOrders = this.state.yourCompletedOrders.map(order => {
             return <tr>
               <td style={{whiteSpace: 'nowrap'}}>{order.servicename}</td>
-              <td style={{whiteSpace: 'nowrap'}}>{order.price}</td>
+              <td style={{whiteSpace: 'nowrap'}}>${order.price}</td>
               <td style={{whiteSpace: 'nowrap'}}>{order.date}</td>
-              <td style={{whiteSpace: 'nowrap'}}>{order.userid}</td>
+              <td style={{whiteSpace: 'nowrap'}}>{order.username}</td>
             </tr>
           });
           const yourPendingOrders = this.state.yourPendingOrders.map(order => {
             return <tr>
               <td style={{whiteSpace: 'nowrap'}}>{order.servicename}</td>
-              <td style={{whiteSpace: 'nowrap'}}>{order.price}</td>
+              <td style={{whiteSpace: 'nowrap'}}>${order.price}</td>
               <td style={{whiteSpace: 'nowrap'}}>{order.date}</td>
-              <td style={{whiteSpace: 'nowrap'}}>{order.userid}</td>
+              <td style={{whiteSpace: 'nowrap'}}>{order.username}</td>
             </tr>
           });
           const pendingOrders = this.state.pendingOrders.map(order => {
             return <tr>
               <td style={{whiteSpace: 'nowrap'}}>{order.servicename}</td>
-              <td style={{whiteSpace: 'nowrap'}}>{order.price}</td>
+              <td style={{whiteSpace: 'nowrap'}}>${order.price}</td>
               <td style={{whiteSpace: 'nowrap'}}>{order.date}</td>
-              <td style={{whiteSpace: 'nowrap'}}>{order.sellerid}</td>
+              <td style={{whiteSpace: 'nowrap'}}>{order.sellername}</td>
             </tr>
           });
       return (
@@ -109,7 +109,7 @@ yourPendingOrders: []
 <h6 style={{color: 'rebeccapurple'}}>From Your Sales</h6>
 <h6 style={{color: 'grey', textAlign: 'left'}}>Pending Orders</h6>
 <Row style={{maxHeight: '200px',minHeight: '200px', overflowY: 'scroll'}}>
-<Table className="mt-4">
+<Table>
             <thead>
             <tr>
         
@@ -119,14 +119,14 @@ yourPendingOrders: []
               <th width="20%">Buyer</th>
             </tr>
             </thead>
-            <tbody>
+            <tbody style={{color: 'rebeccapurple'}}>
             {pendingOrders}
             </tbody>
           </Table>
 </Row><br/><br/>
 <h6 style={{color: 'grey', textAlign: 'left'}}>Completed Orders</h6>
 <Row style={{maxHeight: '200px',minHeight: '200px', overflowY: 'scroll'}}>
-<Table className="mt-4">
+<Table>
             <thead>
             <tr>
         
@@ -136,7 +136,7 @@ yourPendingOrders: []
               <th width="20%">Buyer</th>
             </tr>
             </thead>
-            <tbody>
+            <tbody style={{color: 'rebeccapurple'}}>
             {completedOrders}
             </tbody>
           </Table> 
@@ -146,7 +146,7 @@ yourPendingOrders: []
 <h6 style={{color: 'rebeccapurple'}}>From Your Shopping</h6>
 <h6 style={{color: 'grey', textAlign: 'left'}}>Pending Orders</h6>
 <Row style={{maxHeight: '200px',minHeight: '200px', overflowY: 'scroll'}}>
-<Table className="mt-4">
+<Table>
             <thead>
             <tr>
         
@@ -156,14 +156,14 @@ yourPendingOrders: []
               <th width="20%">Seller</th>
             </tr>
             </thead>
-            <tbody>
+            <tbody style={{color: 'rebeccapurple'}}>
             {yourPendingOrders}
             </tbody>
           </Table>
 </Row><br/><br/>
 <h6 style={{color: 'grey', textAlign: 'left'}}>Completed Orders</h6>
 <Row style={{maxHeight: '200px',minHeight: '200px', overflowY: 'scroll'}}>
-<Table className="mt-4">
+<Table>
             <thead>
             <tr>
         
@@ -173,7 +173,7 @@ yourPendingOrders: []
               <th width="20%">Seller</th>
             </tr>
             </thead>
-            <tbody>
+            <tbody style={{color: 'rebeccapurple'}}>
             {yourCompletedOrders}
             </tbody>
           </Table> 

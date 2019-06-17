@@ -7,7 +7,9 @@ import Nutrition from '../images/categories/funandlifestyle/nutrition.jpg'
 import Workout from '../images/categories/funandlifestyle/workout.jpg'
 import Viral from '../images/categories/funandlifestyle/viral.jpg'
 import Arts from '../images/categories/funandlifestyle/arts.jpg'
-
+import {FaMoneyBillAlt} from 'react-icons/fa';
+import { SocialIcon } from 'react-social-icons';
+import ReferAndEarn from '../images/referandearn.png'
 
 
 
@@ -23,7 +25,31 @@ import Arts from '../images/categories/funandlifestyle/arts.jpg'
     render() {
       return (
         <div className="graphics">
-        <h2 className="grapheading">Fun & Lifestyle</h2>
+         <Row style={{marginTop: '2%', marginBottom: '2%'}}>
+          <Col>
+          <h6 style={{color: 'rebeccapurple', textAlign: 'left', marginLeft: '6%'}}>Follow us on social media</h6>
+          <Row style={{marginLeft: '2%'}}>
+            <Col xs="1">
+            <SocialIcon url="https://www.instagram.com/zimlancer" style={{ height: 25, width: 25 }}/>
+            </Col>
+            <Col xs="1">
+            <SocialIcon url="https://www.facebook.com/zimlancerZW/" style={{ height: 25, width: 25 }}/>
+            </Col>
+            <Col xs="1">
+            <SocialIcon url="https://twitter.com/zimlancer" style={{ height: 25, width: 25 }}/>
+            </Col>
+            <Col xs="1">
+            <SocialIcon url="https://plus.google.com/101601834693120746253" style={{ height: 25, width: 25 }}/>
+            </Col>
+          </Row>
+          </Col>
+ <Col>
+ <h2>Fun & Lifestyle</h2>
+          </Col>
+          <Col>
+          <a href="/dashboard/referralsystem"><h6 style={{color: 'rebeccapurple', marginTop: '10px', float: 'right', paddingRight: '15px'}}><FaMoneyBillAlt color="rebeccapurple" size="30px"/> Refer and earn</h6></a>
+          </Col>
+        </Row>
         <Row className="mainrow">
 
 <Col className="leftsidebar" xs="3">
@@ -34,7 +60,8 @@ import Arts from '../images/categories/funandlifestyle/arts.jpg'
 <h6 className="subcatrow"><a href="/funandlifestyle/Workout Plans">Workout Plans</a></h6>
 <h6 className="subcatrow"><a href="/funandlifestyle/Business">Business</a></h6>
 <h6 className="subcatrow"><a href="/funandlifestyle/Viral Videos">Viral Videos</a></h6>
-
+<br/>
+<a href="/dashboard/referralsystem"><img src={ReferAndEarn} style={{width: '90%'}}/></a>
 </Col>
 <Col className="subcategories">
         <Row>

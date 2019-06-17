@@ -61,7 +61,7 @@ if(this.state.currentview=="adminpanel"){
       }
          //////////////admin access
          this.AdminButton = () =>{
-           if(this.state.userDetails.access!="admin"){///////disabled admin feature for now
+           if(this.state.userDetails.access=="admin"){
             return<div>
             <Button id="adminpanel" onClick={this.viewItem} style={{backgroundColor: 'inherit', border: 'none', color: 'rebeccapurple'}}>Admin Panel</Button><br/>
 </div>
@@ -80,7 +80,7 @@ if(this.state.currentview=="adminpanel"){
                      var path=BACKEND_URL+"images/profilepictures/"+user.profilepicturepath
                      return<div>
                        <Row><Col style={{borderRight:'1px solid rgba(0, 0, 0, 0.5)'}} sm="2">
-                     <img src={path} style={{width: '100px', borderRadius: '50%', height: '100px'}}/>
+                     <img src={path} onError={this.userIcon} style={{width: '100px', borderRadius: '50%', height: '100px'}}/>
                      <h6 style={{borderBottom:'1px solid rgba(0, 0, 0, 0.5)'}}>{user.username}<br/><br/></h6>
                      <Button id="accountsummary" onClick={this.viewItem} style={{backgroundColor: 'inherit', border: 'none', color: 'rebeccapurple'}}>Account Summary</Button><br/>
                      <this.AdminButton/>
@@ -118,7 +118,9 @@ if(this.state.currentview=="adminpanel"){
   viewItem(e) {
     this.setState({currentview: e.target.id});
   }
-
+  userIcon=(e)=>{
+    e.target.src=require("../images/usericon.png")
+};
     render() {
 
       return (

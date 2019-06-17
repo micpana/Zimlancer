@@ -223,6 +223,7 @@ import gql from 'graphql-tag';
 export const CREATE_SERVICE_BID=gql` mutation createServiceBid(
     $name: String!,
     $userid: String!,
+    $username: String!,
     $payout: Int!,
     $expectedcompletiontime: Int!,
     $typeofdelivery: String!,
@@ -238,6 +239,7 @@ export const CREATE_SERVICE_BID=gql` mutation createServiceBid(
   createServiceBid(input: {
     name: $name
     userid: $userid
+    username: $username
     payout: $payout
     expectedcompletiontime: $expectedcompletiontime
     typeofdelivery: $typeofdelivery
@@ -414,3 +416,204 @@ export const ADD_REFERRAL=gql` mutation addReferral(
     date
   }
  }`;
+
+ export const CREATE_SERVICE_REVIEW=gql` mutation createServiceReview(
+  $serviceid: String!,
+  $userid: String!,
+  $sellerid: String,
+  $review: String!,
+  $rating: Int!,
+  $date: String!
+ ){
+  createServiceReview(input: {
+    serviceid: $serviceid
+    userid: $userid
+    sellerid: $sellerid
+    review: $review
+    rating: $rating
+    date: $date
+  }){
+    id
+    serviceid
+    userid
+    sellerid
+    review
+    rating
+    date
+  }
+ }`;
+
+ export const UPDATE_NOTIFICATION=gql` mutation updateNotification(
+  $id: ID!
+  $userid: String!,
+  $notification: String!,
+  $date: String!,
+  $read: String!,
+  $href: String
+ ){
+  updateNotification(id: $id, input: {
+    userid: $userid
+    notification: $notification
+    date: $date
+    read: $read
+    href: $href
+  }){
+    id
+    userid
+    notification
+    date
+    read
+    href
+  }
+ }`;
+
+ export const CREATE_NOTIFICATION=gql` mutation createNotification(
+  $userid: String!,
+  $notification: String!,
+  $date: String!,
+  $read: String!,
+  $href: String
+ ){
+  createNotification(input: {
+    userid: $userid
+    notification: $notification
+    date: $date
+    read: $read
+    href: $href
+  }){
+    id
+    userid
+    notification
+    date
+    read
+    href
+  }
+ }`;
+
+ export const CREATE_SEARCH=gql` mutation createSearches(
+  $userid: String,
+  $searchitem: String!,
+  $date: String!
+ ){
+  createSearches(input: {
+    userid: $userid
+    searchitem: $searchitem
+    date: $date
+  }){
+    id
+    userid
+    searchitem
+    date
+  }
+ }`;
+
+
+ export const CREATE_BID_COMMENT=gql` mutation createBidComment(
+  $userid: String!,
+  $sellerid: String!,
+  $bidid: String!,
+  $comment: String!,
+  $datelisted: String!
+ ){
+  createBidComment(input: {
+    userid: $userid
+    sellerid: $sellerid
+    bidid: $bidid
+    comment: $comment
+    datelisted: $datelisted
+  }){
+    id
+    userid
+    sellerid
+    bidid
+    comment
+    datelisted
+  }
+ }`;
+
+ export const UPDATE_SERVICE_BID=gql` mutation updateServiceBid(
+   $id: ID!
+  $name: String!,
+  $userid: String!,
+  $username: String!,
+  $payout: Int!,
+  $expectedcompletiontime: Int!,
+  $typeofdelivery: String!,
+  $numberofbids: Int!,
+  $description: String!,
+  $maincategory: String!,
+  $subcategory: String!,
+  $active: String!,
+  $datelisted: String!,
+  $expirationdate: String!,
+  $bidimage: String!,
+  $wonby: String
+){
+updateServiceBid(id: $id, input: {
+  name: $name
+  userid: $userid
+  username: $username
+  payout: $payout
+  expectedcompletiontime: $expectedcompletiontime
+  typeofdelivery: $typeofdelivery
+  numberofbids: $numberofbids
+  description: $description
+  maincategory: $maincategory
+  subcategory: $subcategory
+  active: $active
+  datelisted: $datelisted
+  expirationdate: $expirationdate
+  bidimage: $bidimage
+  wonby: $wonby
+}){
+  id
+  name
+  userid
+  username
+  payout
+  expectedcompletiontime
+  numberofbids
+  description
+  maincategory
+  subcategory
+  active
+  datelisted
+  expirationdate
+  typeofdelivery
+  bidimage
+  wonby
+}
+}`;
+
+export const UPDATE_MESSAGE=gql` mutation updateMessage(
+  $id: ID!
+  $sender: String!,
+  $receiver: String!,
+  $message: String!,
+  $date: String!,
+  $filepath1: String,
+  $filepath2: String,
+  $filepath3: String,
+  $read: String!
+){
+updateMessage(id: $id, input: {
+  sender: $sender
+  receiver: $receiver
+  message: $message
+  date: $date
+  filepath1: $filepath1
+  filepath2: $filepath2
+  filepath3: $filepath3
+  read: $read
+}){
+  id
+  sender
+  receiver
+  message
+  date
+  filepath1
+  filepath2
+  filepath3
+  read
+}
+}`;

@@ -15,6 +15,9 @@ import Potraits from '../images/categories/graphicsanddesign/potraits.jpg'
 import Presentation from '../images/categories/graphicsanddesign/presentation.jpg'
 import Social from '../images/categories/graphicsanddesign/social.jpg'
 import Tshirts from '../images/categories/graphicsanddesign/tshirts.jpg'
+import {FaMoneyBillAlt} from 'react-icons/fa';
+import { SocialIcon } from 'react-social-icons';
+import ReferAndEarn from '../images/referandearn.png'
 
   class Graphics extends Component{
     constructor(props) {
@@ -28,8 +31,32 @@ import Tshirts from '../images/categories/graphicsanddesign/tshirts.jpg'
     render() {
       return (
         <div className="graphics">
-        <h2 className="grapheading">Graphics and Design</h2>
-        <Row className="mainrow">
+   <Row style={{marginTop: '2%', marginBottom: '2%'}}>
+          <Col>
+          <h6 style={{color: 'rebeccapurple', textAlign: 'left', marginLeft: '6%'}}>Follow us on social media</h6>
+          <Row style={{marginLeft: '2%'}}>
+            <Col xs="1">
+            <SocialIcon url="https://www.instagram.com/zimlancer" style={{ height: 25, width: 25 }}/>
+            </Col>
+            <Col xs="1">
+            <SocialIcon url="https://www.facebook.com/zimlancerZW/" style={{ height: 25, width: 25 }}/>
+            </Col>
+            <Col xs="1">
+            <SocialIcon url="https://twitter.com/zimlancer" style={{ height: 25, width: 25 }}/>
+            </Col>
+            <Col xs="1">
+            <SocialIcon url="https://plus.google.com/101601834693120746253" style={{ height: 25, width: 25 }}/>
+            </Col>
+          </Row>
+          </Col>
+ <Col>
+ <h2>Graphics & Design</h2>
+          </Col>
+          <Col>
+          <a href="/dashboard/referralsystem"><h6 style={{color: 'rebeccapurple', marginTop: '10px', float: 'right', paddingRight: '15px'}}><FaMoneyBillAlt color="rebeccapurple" size="30px"/> Refer and earn</h6></a>
+          </Col>
+        </Row>     
+           <Row className="mainrow">
 
 <Col className="leftsidebar" xs="3">
 <h5 className="subcatmaincat">Graphics & Design</h5>
@@ -47,7 +74,8 @@ import Tshirts from '../images/categories/graphicsanddesign/tshirts.jpg'
 <h6 className="subcatrow"><a href="/graphicsanddesign/Banner Ads">Banner Ads</a></h6>
 <h6 className="subcatrow"><a href="/graphicsanddesign/Invitations">Invitations</a></h6>
 <h6 className="subcatrow"><a href="/graphicsanddesign/Social Media">Social Media</a></h6>
-
+<br/>
+<a href="/dashboard/referralsystem"><img src={ReferAndEarn} style={{width: '90%'}}/></a>
 </Col>
 <Col className="subcategories">
         <Row>

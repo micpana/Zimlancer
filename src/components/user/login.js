@@ -33,7 +33,7 @@ registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
       this.handleSubmit = this.handleSubmit.bind(this);
         ///check if user is logged in already
         this.ValidateLogin = () =>{
-          const { cookies } = this.props;
+          const { cookies } = this.props; 
           if(cookies.get('userId')!=null){
             let port = (window.location.port ? ':' + window.location.port : '');
             ////reloading page to home in 3 seconds

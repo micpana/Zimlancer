@@ -3,7 +3,7 @@ import './viewservice.css';
 import {Row, CardDeck, Col,  Card, CardImg, CardText, CardBody,
   CardTitle, CardSubtitle, Button, CardGroup, Label, InputGroup, InputGroupAddon, Input} from 'reactstrap';
 import {GRAPHQL_BASE_URL} from '../graphql/BaseUrlComponent';
-import {GET_SERVICES_BY_SUBCATEGORY, GET_USER, GET_BIDS_BY_SUBCATEGORY} from '../graphql/QueryResolver';
+import {SEARCH_BIDS, GET_USER} from '../graphql/QueryResolver';
 import {BACKEND_URL} from '../backendurl';import axios from 'axios';
 import {print} from 'graphql';
 import StarRatings from 'react-star-ratings';
@@ -15,7 +15,7 @@ import moment from 'moment';
 
 
 
-  class Bids extends Component{
+  class BidsResults extends Component{
     constructor(props) {
       super(props);
   
@@ -29,13 +29,20 @@ import moment from 'moment';
             this.finalDisplay = () =>{
               if(this.state.bidsList.length==0){
 return<Row>
-  <h6 style={{color: 'rebeccapurple', marginTop: '50px', paddingLeft: '45px'}}>There are no active bids in <span style={{color: '#25292C'}}>{this.props.subcategory}</span> . If you're looking for people skilled at <span style={{color: '#25292C'}}>{this.props.subcategory}</span> <a style={{color: 'blue'}} href="/postbid/">Click here</a> to post a bid.</h6>
+  <h6 style={{color: 'rebeccapurple', marginTop: '50px', paddingLeft: '45px'}}>No active bids matching <span style={{color: '#25292C'}}>{this.props.searchQuery}</span> have been found.</h6>
 </Row>
               }else{
               if(this.props.sortBy=="default"){
                 const bidsList = this.state.bidsList.map((bid, index) => {
+                  axios.post(GRAPHQL_BASE_URL, {
+                    query: print(GET_USER), variables: {id: bid.userid}
+                }).then((result) => {
+                    localStorage.setItem(index, result.data.data.getUser.profilepicturepath)    
+                }).catch(error => {
+                  console.log(error.response)
+              });
             
-            const profileimage= BACKEND_URL+"images/profilepictures/"+bid.profilepicturepath
+            const profileimage= BACKEND_URL+"images/profilepictures/"+localStorage.getItem(index)
             const bidimage= BACKEND_URL+"images/bids/"+bid.bidimage
                   //////default price range
       if(this.props.minprice==""&&this.props.maxprice==""&&this.props.deliverytime==""||this.props.minprice==null&&this.props.maxprice==null&&this.props.deliverytime==null){
@@ -137,9 +144,16 @@ return<Row>
          return new Date(b.payout) - new Date(a.payout);
        });
        const bidsList = payoutDescending.map((bid, index) => {
+        axios.post(GRAPHQL_BASE_URL, {
+          query: print(GET_USER), variables: {id: bid.userid}
+      }).then((result) => {
+          localStorage.setItem(index, result.data.data.getUser.profilepicturepath)   
+      }).catch(error => {
+        console.log(error.response)
+    });
   
-        const profileimage= BACKEND_URL+"images/profilepictures/"+bid.profilepicturepath
-        const bidimage= BACKEND_URL+"images/bids/"+bid.bidimage
+  const profileimage= BACKEND_URL+"images/profilepictures/"+localStorage.getItem(index)
+  const bidimage= BACKEND_URL+"images/bids/"+bid.bidimage
                         //////default price range
                         if(this.props.minprice==""&&this.props.maxprice==""&&this.props.deliverytime==""||this.props.minprice==null&&this.props.maxprice==null&&this.props.deliverytime==null){
                           return<Row><a className="lstlink" href={"/bids/"+bid.maincategory+"/"+bid.subcategory+"/"+bid.id}><Col className="cardcol">
@@ -238,9 +252,16 @@ return<Row>
         return new Date(a.payout) - new Date(b.payout);
       });
       const bidsList = payoutAscending.map((bid, index) => {
+       axios.post(GRAPHQL_BASE_URL, {
+         query: print(GET_USER), variables: {id: bid.userid}
+     }).then((result) => {
+         localStorage.setItem(index, result.data.data.getUser.profilepicturepath)    
+     }).catch(error => {
+       console.log(error.response)
+   });
  
-        const profileimage= BACKEND_URL+"images/profilepictures/"+bid.profilepicturepath
-        const bidimage= BACKEND_URL+"images/bids/"+bid.bidimage
+ const profileimage= BACKEND_URL+"images/profilepictures/"+localStorage.getItem(index)
+ const bidimage= BACKEND_URL+"images/bids/"+bid.bidimage
                       //////default price range
                       if(this.props.minprice==""&&this.props.maxprice==""&&this.props.deliverytime==""||this.props.minprice==null&&this.props.maxprice==null&&this.props.deliverytime==null){
                         return<Row><a className="lstlink" href={"/bids/"+bid.maincategory+"/"+bid.subcategory+"/"+bid.id}><Col className="cardcol">
@@ -340,27 +361,9 @@ return<Row>
  
     componentDidMount() {
         axios.post(GRAPHQL_BASE_URL, {
-            query: print(GET_BIDS_BY_SUBCATEGORY), variables: {subcategory: this.props.subcategory}
-        }).then((result) => {            
-            var bids=result.data.data.getServiceBidsBySubCategory
-
-            bids.map((bid, index) => {/////////////////////////////////////map all bids
-    let userid= bid.userid;//get userid from service details
-    
-    axios.post(GRAPHQL_BASE_URL, {///get service lister details
-    query: print(GET_USER), variables: {id: userid}
-    }).then((result2) => {
-
-      bids[index].profilepicturepath = result2.data.data.getUser.profilepicturepath////set lister profile picture
-
-    }).catch(error => {
-    console.log(error.response)
-    });/////////////////////////////ends here
-            });///////////////////////////////////////////////////////////////ends here
-    
-            this.setState({bidsList: bids});
-            this.interval = setInterval(() => this.setState({bidsList: bids}), 1000);///update state every 1 second
-    
+            query: print(SEARCH_BIDS), variables: {searchQuery: this.props.searchQuery}
+        }).then((result) => {
+            this.setState({bidsList: result.data.data.searchBids});
         }).catch(error => {
           console.log(error.response)
       });
@@ -379,4 +382,4 @@ return<Row>
 
   };
   
-  export default Bids;
+  export default BidsResults;

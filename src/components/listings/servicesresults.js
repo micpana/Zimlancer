@@ -3,9 +3,8 @@ import './viewservice.css';
 import {Row, CardDeck, Col,  Card, CardImg, CardText, CardBody,
   CardTitle, CardSubtitle, Button, CardGroup, Label, InputGroup, InputGroupAddon, Input} from 'reactstrap';
 import {GRAPHQL_BASE_URL} from '../graphql/BaseUrlComponent';
-import {GET_SERVICES_BY_SUBCATEGORY, GET_USER, GET_BIDS_BY_SUBCATEGORY} from '../graphql/QueryResolver';
-import {BACKEND_URL} from '../backendurl';
-import axios from 'axios';
+import {SEARCH_SERVICES, GET_USER} from '../graphql/QueryResolver';
+import {BACKEND_URL} from '../backendurl';import axios from 'axios';
 import {print} from 'graphql';
 import StarRatings from 'react-star-ratings';
 import { FaRegEnvelope, FaFly } from 'react-icons/fa';
@@ -16,7 +15,7 @@ import moment from 'moment';
 
 
 
-  class Services extends Component{
+  class ServicesResults extends Component{
     constructor(props) {
       super(props);
   
@@ -25,18 +24,25 @@ import moment from 'moment';
         userDetails:{}
 
       };
-
-        this.finalDisplay = () =>{/////////////////////////////////for sorting and filtering
+        /////////for sorting and filtering
+        this.finalDisplay = () =>{
           if(this.state.servicesList.length==0){
 return<Row>
-<h6 style={{color: 'rebeccapurple', marginTop: '50px', paddingLeft: '45px'}}>No services have been posted in <span style={{color: '#25292C'}}>{this.props.subcategory}</span> yet. If you're skilled at <span style={{color: '#25292C'}}>{this.props.subcategory}</span> <a style={{color: 'blue'}} href="/upload/">Click here</a> to create a gig.</h6>
+<h6 style={{color: 'rebeccapurple', marginTop: '50px', paddingLeft: '45px'}}>No services matching <span style={{color: '#25292C'}}>{this.props.searchQuery}</span> have been found. If you want to make a request for <span style={{color: '#25292C'}}>{this.props.searchQuery}</span> <a style={{color: 'blue'}} href="/postbid/">Click here</a> to post a bid.</h6>
 </Row>
           }else{
         if(this.props.sortBy=="default"){
           const servicesList = this.state.servicesList.map((service, index) => {
-
-        var profileimage= BACKEND_URL+"images/profilepictures/"+service.profilepicturepath;
-        const serviceimage= BACKEND_URL+"images/services/"+service.imagepath1
+  
+            axios.post(GRAPHQL_BASE_URL, {
+              query: print(GET_USER), variables: {id: service.userid}
+          }).then((result) => {
+              localStorage.setItem(index, result.data.data.getUser.profilepicturepath) 
+          }).catch(error => {
+            console.log(error.response)
+        });
+        const profileimage= BACKEND_URL+"images/profilepictures/"+localStorage.getItem(index)
+      const serviceimage= BACKEND_URL+"images/services/"+service.imagepath1
       //////default price range
       if(this.props.minprice==""&&this.props.maxprice==""&&this.props.deliverytime==""||this.props.minprice==null&&this.props.maxprice==null&&this.props.deliverytime==null){
         return<Row><a className="lstlink" href={"/"+service.maincategory+"/"+service.subcategory+"/"+service.id}><Col className="cardcol">
@@ -135,8 +141,16 @@ return<Row>
     return new Date(b.price) - new Date(a.price);
   });
           const servicesList = priceDescending.map((service, index) => {
-         
-      var profileimage= BACKEND_URL+"images/profilepictures/"+service.profilepicturepath;
+  
+            axios.post(GRAPHQL_BASE_URL, {
+              query: print(GET_USER), variables: {id: service.userid}
+          }).then((result) => {
+localStorage.setItem(index, result.data.data.getUser.profilepicturepath)
+          }).catch(error => {
+            console.log(error.response)
+        });
+        const profileimage= BACKEND_URL+"images/profilepictures/"+localStorage.getItem(index)
+  
       const serviceimage= BACKEND_URL+"images/services/"+service.imagepath1
           //////default price range
       if(this.props.minprice==""&&this.props.maxprice==""&&this.props.deliverytime==""||this.props.minprice==null&&this.props.maxprice==null&&this.props.deliverytime==null){
@@ -235,8 +249,16 @@ return<Row>
     return new Date(a.price) - new Date(b.price);
   });
           const servicesList = priceAscending.map((service, index) => {
-          
-      var profileimage= BACKEND_URL+"images/profilepictures/"+service.profilepicturepath;
+  
+            axios.post(GRAPHQL_BASE_URL, {
+              query: print(GET_USER), variables: {id: service.userid}
+          }).then((result) => {
+              localStorage.setItem(index, result.data.data.getUser.profilepicturepath)
+          }).catch(error => {
+            console.log(error.response)
+        });
+        const profileimage= BACKEND_URL+"images/profilepictures/"+localStorage.getItem(index)
+  
       const serviceimage= BACKEND_URL+"images/services/"+service.imagepath1
            //////default price range
       if(this.props.minprice==""&&this.props.maxprice==""&&this.props.deliverytime==""||this.props.minprice==null&&this.props.maxprice==null&&this.props.deliverytime==null){
@@ -330,43 +352,25 @@ return<Row>
           return<Row>{servicesList}</Row>
         }
         } 
-      }////////////////////////////////////////////////////////////////////////ends here
+      }
       
     }
  
     componentDidMount() {
-      axios.post(GRAPHQL_BASE_URL, {
-        query: print(GET_SERVICES_BY_SUBCATEGORY), variables: {subcategory: this.props.subcategory}
-    }).then((result) => {
-        var services=result.data.data.getServicesBySubcategory
-
-        services.map((service, index) => {/////////////////////////////////////map all services
-let userid= service.userid;//get userid from service details
-
-axios.post(GRAPHQL_BASE_URL, {///get service lister details
-query: print(GET_USER), variables: {id: userid}
-}).then((result2) => {
-
-  services[index].profilepicturepath = result2.data.data.getUser.profilepicturepath//////set lister profile picture
-
-}).catch(error => {
-console.log(error.response)
-});/////////////////////////////ends here
-        });///////////////////////////////////////////////////////////////ends here
-
-        this.setState({servicesList: services});
-        this.interval = setInterval(() => this.setState({servicesList: services}), 1000);///update state every 1 second
-
-    }).catch(error => {
-      console.log(error.response)
-  });    
+        axios.post(GRAPHQL_BASE_URL, {
+            query: print(SEARCH_SERVICES), variables: {searchQuery: this.props.searchQuery}
+        }).then((result) => {
+            this.setState({servicesList: result.data.data.searchServices});
+        }).catch(error => {
+          console.log(error.response)
+      });
   }
  
 
 
     render() {
        
-      console.log('kkkkkkkkk', this.state.servicesList)
+      
         return(<div>
         <this.finalDisplay/>
         </div>
@@ -375,4 +379,4 @@ console.log(error.response)
 
   };
   
-  export default Services;
+  export default ServicesResults;

@@ -4,18 +4,18 @@ import {Row, CardDeck, Col,  Card, CardImg, CardText, CardBody,
   CardTitle, CardSubtitle, Button, CardGroup, Label, InputGroup, InputGroupAddon, Input} from 'reactstrap';
 import {GRAPHQL_BASE_URL} from '../graphql/BaseUrlComponent';
 import {BACKEND_URL} from '../backendurl';
-import {GET_SERVICES_BY_SUBCATEGORY, GET_USER, GET_BIDS_BY_SUBCATEGORY} from '../graphql/QueryResolver';
+import {SEARCH_BIDS, SEARCH_SERVICES} from '../graphql/QueryResolver';
 import axios from 'axios';
 import {print} from 'graphql';
 import { runInThisContext } from 'vm';
-import Services from './services';
-import Bids from './bids';
-import All from './all'
+import ServicesResults from './servicesresults';
+import BidsResults from './bidsresults';
+import AllResults from './allresults'
 import {FaMoneyBillAlt} from 'react-icons/fa';
 import { SocialIcon } from 'react-social-icons';
 import ReferAndEarn from '../images/referandearn.png'
 
-  class ServicesList extends Component{
+  class ResultsList extends Component{
     constructor(props) {
       super(props);
   
@@ -38,18 +38,18 @@ deliverytime: null
       /////////view
       this.CurrentView = () =>{
         if(this.state.currentview=="services"){
-          return<Services subcategory={this.props.match.params.subcategory} sortBy={this.state.ServicesSortBy}
-          subcategory={this.props.match.params.subcategory} minprice={this.state.minprice} maxprice={this.state.maxprice} deliverytime={this.state.deliverytime}
+          return<ServicesResults searchQuery={this.props.match.params.searchQuery} sortBy={this.state.ServicesSortBy}
+          minprice={this.state.minprice} maxprice={this.state.maxprice} deliverytime={this.state.deliverytime}
           />
         }
         if(this.state.currentview=="bids"){
-          return<Bids subcategory={this.props.match.params.subcategory}  sortBy={this.state.BidsSortBy}
-          subcategory={this.props.match.params.subcategory} minprice={this.state.minprice} maxprice={this.state.maxprice} deliverytime={this.state.deliverytime}
+          return<BidsResults searchQuery={this.props.match.params.searchQuery}  sortBy={this.state.BidsSortBy}
+          minprice={this.state.minprice} maxprice={this.state.maxprice} deliverytime={this.state.deliverytime}
           />
         }
         if(this.state.currentview=="all"){
-          return<All subcategory={this.props.match.params.subcategory}  sortBy={this.state.AllSortBy}
-          subcategory={this.props.match.params.subcategory} minprice={this.state.minprice} maxprice={this.state.maxprice} deliverytime={this.state.deliverytime}
+          return<AllResults searchQuery={this.props.match.params.searchQuery}  sortBy={this.state.AllSortBy}
+         minprice={this.state.minprice} maxprice={this.state.maxprice} deliverytime={this.state.deliverytime}
           />
         }
      
@@ -112,9 +112,9 @@ if(this.state.currentview=="bids"){
 if(this.state.currentview=="all"){
   return   <Row>
   <Col>
-    <Button id="all" onClick={this.viewItem} style={{backgroundColor: 'inherit', border: 'none', color: 'rebeccapurple', float: 'left'}}>All
+    {/* <Button id="all" onClick={this.viewItem} style={{backgroundColor: 'inherit', border: 'none', color: 'rebeccapurple', float: 'left'}}>All
    ({all})
-    </Button>
+    </Button> */}
     <Button id="services" onClick={this.viewItem} style={{backgroundColor: 'inherit', border: 'none', color: 'grey', float: 'left'}}>Services 
    ({services})
     </Button>
@@ -138,20 +138,19 @@ if(this.state.currentview=="all"){
     }
 
     componentDidMount() {
-      axios.post(GRAPHQL_BASE_URL, {
-        query: print(GET_SERVICES_BY_SUBCATEGORY), variables: {subcategory: this.props.match.params.subcategory}
-    }).then((result) => {
-        this.setState({servicesList: result.data.data.getServicesBySubcategory});
-    }).catch(error => {
-      console.log(error.response)
-  });
-  axios.post(GRAPHQL_BASE_URL, {
-    query: print(GET_BIDS_BY_SUBCATEGORY), variables: {subcategory: this.props.match.params.subcategory}
-}).then((result) => {
-    this.setState({bidsList: result.data.data.getServiceBidsBySubCategory});
-}).catch(error => {
-  console.log(error.response)
-})
+        axios.all([
+            axios.post(GRAPHQL_BASE_URL, {
+                query: print(SEARCH_SERVICES), variables: {searchQuery: this.props.match.params.searchQuery}
+            }),
+              axios.post(GRAPHQL_BASE_URL, {
+                  query: print(SEARCH_BIDS), variables: {searchQuery: this.props.match.params.searchQuery}
+              })] ).then(axios.spread((service, bid) => {
+        
+            this.setState({servicesList:  service.data.data.searchServices})
+            this.setState({bidsList:  bid.data.data.searchBids})
+        
+        
+            }));
  
 
   }
@@ -195,7 +194,7 @@ if(this.state.currentview=="all"){
           </Row>
           </Col>
           <Col>
-          <h2 className="grapheading">{this.props.match.params.subcategory}</h2>
+          <h2 className="grapheading">Search Results for: <br/><h5 style={{color: 'rebeccapurple'}}>"{this.props.match.params.searchQuery}"</h5></h2>
           </Col>
           <Col>
           <a href="/dashboard/referralsystem"><h6 style={{color: 'rebeccapurple', marginTop: '10px', float: 'right', paddingRight: '15px'}}><FaMoneyBillAlt color="rebeccapurple" size="30px"/> Refer and earn</h6></a>
@@ -246,4 +245,4 @@ value={this.state.deliverytime} onChange={this.handleChange} />
 
   };
   
-  export default ServicesList;
+  export default ResultsList;

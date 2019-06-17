@@ -1,10 +1,10 @@
 .logo{
-    width: 15%;
-    margin-left: -200px;
+    width: 30%;
+    margin-left: -50%;
 }
 
 .navsearch{
-    margin-left: -190px;
+    /* margin-left: -190px; */
 
 }
 .statement{
@@ -13,6 +13,8 @@
 }
 .sitename{
     font-size: 20px;
+    margin-left: -9%;
+    color: #A7A7A7;
 }
 .navbar{
     box-shadow: 0 8px 16px 0 rgba(56, 98, 153, 0.137), 0 6px 20px 0 rgba(66, 56, 153, 0.24);

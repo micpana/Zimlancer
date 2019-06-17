@@ -13,9 +13,15 @@ import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orien
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
 import { BACKEND_URL } from '../backendurl';
+import { withCookies, Cookies } from 'react-cookie';
+import { instanceOf } from 'prop-types';
+import DateTimePicker from 'react-datetime-picker';
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 
   class UploadBid extends Component{
+    static propTypes = {
+      cookies: instanceOf(Cookies).isRequired
+  };
     constructor(props) {
       super(props);
   
@@ -36,7 +42,6 @@ registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
         userDetails: {},
         allCategories: [],
         subcategories: []
-
         
       };
       this.handleChange = this.handleChange.bind(this);
@@ -44,11 +49,13 @@ registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
       this.loadSubcategories = this.loadSubcategories.bind(this);
 
     }
+    onSetDate = date => this.setState({ expirationdate: date });
 
     componentDidMount() {
-      this.setState({userid: this.props.userid})
+      const { cookies } = this.props;
+      this.setState({userid: cookies.get('userId')})
       axios.post(GRAPHQL_BASE_URL, {///////////get user
-        query: print(GET_USER), variables: {id: this.state.userid}
+        query: print(GET_USER), variables: {id: cookies.get('userId')}
     }).then((result) => {
         this.setState({userDetails: result.data.data.getUser});
     
@@ -72,13 +79,14 @@ registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 handleSubmit(e) {
   e.preventDefault()
   var today = new Date();
-  var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+  var date = today.getFullYear()+'/'+(today.getMonth()+1)+'/'+today.getDate();
   var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds() + ":" + today.getMilliseconds();
   var dateTime = date+' '+time;
     axios.post(GRAPHQL_BASE_URL, {
       query: print(CREATE_SERVICE_BID), variables: {
         name: this.state.name,
         userid: this.state.userid,
+        username: this.state.userDetails.username,
         payout: parseInt(this.state.payout, 10),
         expectedcompletiontime: parseInt(this.state.expectedcompletiontime, 10),
         typeofdelivery: this.state.typeofdelivery,
@@ -103,8 +111,9 @@ handleSubmit(e) {
   };
 
   loadSubcategories(e) {
+    this.setState({[e.target.name]: e.target.value});
     axios.post(GRAPHQL_BASE_URL, {//////////get subcategories
-      query: print(GET_SUBCATEGORIES_BY_CATEGORY), variables: {parentcategory: e.target.id}
+      query: print(GET_SUBCATEGORIES_BY_CATEGORY), variables: {parentcategory: e.target.value}
   }).then((result) => {
       this.setState({subcategories: result.data.data.getSubCategoryByCategory});  
   }).catch(error => {
@@ -113,6 +122,10 @@ handleSubmit(e) {
   }
 
     render() {
+      var today = new Date();
+  var date = today.getFullYear()+'/'+(today.getMonth()+1)+'/'+today.getDate();
+  var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds() + ":" + today.getMilliseconds();
+  var dateTime = date+' '+time;
       return (
         <div ><br/>
   <Container style={{border:'1px solid rgba(102, 51, 153, 0.404)'}}>
@@ -191,10 +204,10 @@ handleSubmit(e) {
               <InputGroup>
         <InputGroupAddon addonType="prepend" style={{backgroundColor:'#e9ecef', border:'1px solid #ced4da'}}><IoIosAddCircle style={{margin:'10px'}}/></InputGroupAddon>
         <select className="form-control" name="maincategory" value={this.state.maincategory} 
-                   onChange={this.handleChange}>
+                   onChange={this.loadSubcategories}>
                               <option key="none" value="">--Select an option--</option>
            {this.state.allCategories.map((maincategory) => 
-           <option id={maincategory.category} key={maincategory.category} value={maincategory.category} onClick={this.loadSubcategories}>{maincategory.category}</option>)}
+           <option id={maincategory.category} key={maincategory.category} value={maincategory.category}>{maincategory.category}</option>)}
            </select>
     </InputGroup><br/> 
               </Col>
@@ -223,11 +236,13 @@ handleSubmit(e) {
     </InputGroup><br/>           
          <br/>   
 
-         <Label for="expirationdate">Bid expiry date & Time</Label>
+         <Label for="expirationdate" style={{float: 'left', marginLeft: '5%'}}>Bid expiry date & Time</Label>
     <InputGroup>
         <InputGroupAddon addonType="prepend" style={{backgroundColor:'#e9ecef', border:'1px solid #ced4da'}}><IoMdListBox style={{margin:'10px'}}/></InputGroupAddon>
-        <Input  placeholder="How long do you want this bid to run" type="date" name="expirationdate" id="expirationdate" 
-            value={this.state.expirationdate} onChange={this.handleChange} />
+                <DateTimePicker
+          onChange={this.onSetDate}
+          value={this.state.expirationdate}
+        />
     </InputGroup><br/>           
          <br/>   
 
@@ -250,4 +265,4 @@ handleSubmit(e) {
 
   };
   
-  export default UploadBid;
+  export default withCookies(UploadBid);

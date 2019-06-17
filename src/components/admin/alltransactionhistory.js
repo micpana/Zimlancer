@@ -34,7 +34,7 @@ allTransactionHistory: []
     render() {
         const allTransactionHistory = this.state.allTransactionHistory.map(transaction => {
             return <tr>
-              <td style={{whiteSpace: 'nowrap'}}>{transaction.userid}</td>
+              <td style={{whiteSpace: 'nowrap'}}>{transaction.username}</td>
               <td style={{whiteSpace: 'nowrap'}}>{transaction.servicename}</td>
               <td style={{whiteSpace: 'nowrap'}}>{transaction.date}</td>
               <td style={{whiteSpace: 'nowrap'}}>{transaction.price}</td>
@@ -46,7 +46,7 @@ allTransactionHistory: []
                         <h6>All Transaction History</h6><br/>
                         <Container>
 <Col style={{maxHeight: '450px', minHeight: '450px', overflowY: 'scroll'}}>
-                        <Table className="mt-4">
+                        <Table>
             <thead>
             <tr>
         

@@ -112,14 +112,16 @@ export const GET_SERVICES_BY_USERID=gql`query getServicesByUserId($id: String!){
 
 }`;
   export const GET_ORDERS_IN_QUEUE=gql`query getOrdersInQueue($sellerid: String!, $completed: String!){
-  getOrdersInQueue(sellerid: $userid, completed: $completed){
+  getOrdersInQueue(sellerid: $sellerid, completed: $completed){
     id
     serviceid
     userid
+    username
     price
     date
     paymentmethod
     sellerid
+    sellername
     maincategory
     subcategory
     completed
@@ -191,6 +193,7 @@ export const ALL_SERVICE_BIDS=gql`query {
     id
     name
     userid
+    username
     payout
     expectedcompletiontime
     numberofbids
@@ -290,6 +293,7 @@ export const GET_BIDS_BY_USERID=gql`query getServiceBidsByUserId($userid: String
     id
     name
     userid
+    username
     payout
     expectedcompletiontime
     numberofbids
@@ -325,10 +329,12 @@ export const GET_USER_BALANCE=gql`query getUserBalance($sellerid: String!){
     serviceid
     servicename
     userid
+    username
     price
     date
     paymentmethod
     sellerid
+    sellername
     maincategory
     subcategory
     completed
@@ -353,10 +359,12 @@ export const GET_AMOUNT_SPENT=gql`query getUserBalance($userid: String!){
     serviceid
     servicename
     userid
+    username
     price
     date
     paymentmethod
     sellerid
+    sellername
     maincategory
     subcategory
     completed
@@ -382,10 +390,12 @@ export const GET_COMPLETED_ORDERS=gql`query getOrdersInQueue($sellerid: String!,
     serviceid
     servicename
     userid
+    username
     price
     date
     paymentmethod
     sellerid
+    sellername
     maincategory
     subcategory
     completed
@@ -399,10 +409,12 @@ export const GET_ORDERED_JOBS=gql`query getOrderedJobs($userid: String!, $comple
     serviceid
     servicename
     userid
+    username
     price
     date
     paymentmethod
     sellerid
+    sellername
     maincategory
     subcategory
     completed
@@ -437,6 +449,7 @@ export const GET_BID_DETAILS=gql`query getServiceBids($id: ID!){
     id
     name
     userid
+    username
     payout
     expectedcompletiontime
     numberofbids
@@ -458,6 +471,7 @@ export const GET_BIDS_BY_SUBCATEGORY=gql`query getServiceBidsBySubCategory($subc
     id
     name
     userid
+    username
     payout
     expectedcompletiontime
     numberofbids
@@ -521,10 +535,12 @@ export const VIEW_TRANSACTION=gql`query getPurchaseHistory(
     serviceid
     servicename
     userid
+    username
     price
     date
     paymentmethod
     sellerid
+    sellername
     maincategory
     subcategory
     completed
@@ -591,10 +607,12 @@ export const ALL_TRANSACTIONS=gql`query allPurchaseHistory{
     serviceid
     servicename
     userid
+    username
     price
     date
     paymentmethod
     sellerid
+    sellername
     maincategory
     subcategory
     completed
@@ -633,6 +651,160 @@ export const GET_REFERRAL_CLICKS_BY_USERNAME=gql`query getReferralClicksByUserna
     userid
     referredby
     date
+  }
+
+}`;
+
+export const FIND_USERNAME=gql`query findUsername($username: String!){
+  findUsername(username: $username){
+    username
+  }
+
+}`;
+
+export const FIND_EMAIL_ADDRESS=gql`query findEmailAddress($emailaddress: String!){
+  findEmailAddress(emailaddress: $emailaddress){
+    emailaddress
+  }
+
+}`;
+
+export const SEARCH_SERVICES=gql`query searchServices($searchQuery: String!){
+  searchServices(searchQuery: $searchQuery){
+    id
+    name
+    userid
+    username
+    price
+    completiontime
+    description
+    rating
+    views
+    datelisted
+    extras1
+    extras2
+    extras1price
+    extras2price
+    extras1additionaltime
+    extras2additionaltime
+    imagepath1
+    imagepath2
+    imagepath3
+    maincategory
+    subcategory
+    typeofdelivery
+  }
+
+}`;
+
+export const SEARCH_BIDS=gql`query searchBids($searchQuery: String!){
+  searchBids(searchQuery: $searchQuery){
+    id
+    name
+    userid
+    username
+    payout
+    expectedcompletiontime
+    numberofbids
+    description
+    maincategory
+    subcategory
+    active
+    datelisted
+    expirationdate
+    typeofdelivery
+    bidimage
+    wonby
+  }
+
+}`;
+
+export const SERVICE_REVIEWS=gql`query getServiceReviewByServiceId($serviceid: String!){
+  getServiceReviewByServiceId(serviceid: $serviceid){
+    id
+    serviceid
+    userid
+    sellerid
+    review
+    rating
+    date
+  }
+
+}`;
+
+export const GET_NOTIFICATIONS_BY_USERID=gql`query getNotificationsByUserid($userid: String!){
+  getNotificationsByUserid(userid: $userid){
+    id
+    userid
+    notification
+    date
+    read
+    href
+  }
+
+}`;
+
+export const ALL_SITE_REFERRALS=gql`query {
+  allReferrals{
+    id
+    userid
+    referredby
+    date
+  }
+}`;
+
+export const ALL_REFERRAL_CLICKS=gql`query {
+  allReferralClicks{
+    id
+    userid
+    referredby
+    date
+  }
+}`;
+
+export const GET_COMMISSIONS_BY_USERID=gql`query getCommissionsByUserId(
+  $userid: String!
+){
+  getCommissionsByUserId(userid: $userid){
+    userid
+    transactorid
+    date
+    commission
+    serviceid
+  }
+}`;
+
+export const ALL_COMMISSIONS=gql`query {
+  allCommissionsEarned{
+    userid
+    transactorid
+    date
+    commission
+    serviceid
+  }
+}`;
+
+export const GET_SELLER_RATING=gql`query getSellerRating($sellerid: String){
+  getSellerRating(sellerid: $sellerid){
+    id
+    serviceid
+    userid
+    sellerid
+    review
+    rating
+    date
+  }
+
+}`;
+
+export const GET_BID_COMMENTS=gql`query getBidCommentsByBidId($bidid: String!){
+  getBidCommentsByBidId(bidid: $bidid){
+    id
+    userid
+    sellerid
+    bidid
+    comment
+    datelisted
   }
 
 }`;

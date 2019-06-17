@@ -13,9 +13,14 @@ import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orien
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
 import {BACKEND_URL} from '../backendurl';
+import { withCookies, Cookies } from 'react-cookie';
+import { instanceOf } from 'prop-types';
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 
   class Upload extends Component{
+    static propTypes = {
+      cookies: instanceOf(Cookies).isRequired
+  };
     constructor(props) {
       super(props);
   
@@ -53,9 +58,10 @@ registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
     }
 
     componentDidMount() {
-      this.setState({userid: this.props.userid})
+      const { cookies } = this.props;
+      this.setState({userid: cookies.get('userId')})
       axios.post(GRAPHQL_BASE_URL, {//////////get user
-        query: print(GET_USER), variables: {id: this.props.userid}
+        query: print(GET_USER), variables: {id: cookies.get('userId')}
     }).then((result) => {
         this.setState({userDetails: result.data.data.getUser});
         // console.log(this.state)
@@ -122,8 +128,9 @@ handleSubmit(e) {
   };
 
   loadSubcategories(e) {
+    this.setState({[e.target.name]: e.target.value});
     axios.post(GRAPHQL_BASE_URL, {//////////get subcategories
-      query: print(GET_SUBCATEGORIES_BY_CATEGORY), variables: {parentcategory: e.target.id}
+      query: print(GET_SUBCATEGORIES_BY_CATEGORY), variables: {parentcategory: e.target.value}
   }).then((result) => {
       this.setState({subcategories: result.data.data.getSubCategoryByCategory});  
   }).catch(error => {
@@ -209,10 +216,10 @@ handleSubmit(e) {
               <InputGroup>
         <InputGroupAddon addonType="prepend" style={{backgroundColor:'#e9ecef', border:'1px solid #ced4da'}}><IoIosAddCircle style={{margin:'10px'}}/></InputGroupAddon>
         <select className="form-control" name="maincategory" value={this.state.maincategory} 
-                   onChange={this.handleChange}>
+                   onChange={this.loadSubcategories}>
                               <option key="none" value="">--Select an option--</option>
            {this.state.allCategories.map((maincategory) => 
-           <option id={maincategory.category} key={maincategory.category} value={maincategory.category} onClick={this.loadSubcategories}>{maincategory.category}</option>)}
+           <option id={maincategory.category} key={maincategory.category} value={maincategory.category}>{maincategory.category}</option>)}
            </select>
     </InputGroup><br/> 
               </Col>
@@ -319,4 +326,4 @@ handleSubmit(e) {
 
   };
   
-  export default Upload;
+  export default withCookies(Upload);

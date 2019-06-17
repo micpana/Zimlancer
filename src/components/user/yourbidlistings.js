@@ -28,12 +28,12 @@ if(this.state.userBids==""){
 }else{
     const userBids = this.state.userBids.map((bid, index) => {
         const profileimage= BACKEND_URL+"images/profilepictures/"+ this.state.userDetails.profilepicturepath
-        const bidimage=BACKEND_URL+"images/services/"+bid.bidimage
+        const bidimage=BACKEND_URL+"images/bids/"+bid.bidimage
                 return<Row><a className="lstlink" href={"/bids/"+bid.maincategory+"/"+bid.subcategory+"/"+bid.id}><Col className="cardcol">
                 <Card className="mycard">
-                <CardImg top width="100%" src={bidimage} alt="Card image cap" style={{maxHeight: '130px'}}/>
+                <CardImg top width="100%" src={bidimage} alt="Card image cap" style={{maxHeight: '130px', minHeight: '130px'}}/>
                 <CardBody>
-                  <CardTitle><img className="profpic" src={profileimage} style={{borderRadius:'50%'}}/>   {this.state.userDetails.username}</CardTitle>
+                  <CardTitle><img className="profpic" src={profileimage} style={{borderRadius:'50%', width: '30px', height: '30px'}}/>   {this.state.userDetails.username}</CardTitle>
                   <CardText className="servicetitle">{bid.name}</CardText>
                   <CardSubtitle className="pricing">Payout: <span className="actualprice">${bid.payout}</span></CardSubtitle>
                 </CardBody>

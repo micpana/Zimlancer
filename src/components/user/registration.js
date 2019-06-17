@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import {InputGroup, InputGroupAddon, InputGroupText, Input, Col, Row, Form, Button, Label, Container} from 'reactstrap';
 import {GRAPHQL_BASE_URL} from '../graphql/BaseUrlComponent';
-import {CREATE_USER} from '../graphql/MutationResolver';
+import {CREATE_USER, CREATE_NOTIFICATION} from '../graphql/MutationResolver';
+import {FIND_USERNAME, FIND_EMAIL_ADDRESS} from '../graphql/QueryResolver';
 import axios from 'axios';
 import {print} from 'graphql';
 import {FaRegClock, FaUserAlt, FaUsers, FaPhone, FaKey, FaUserLock, FaCalendarAlt, FaNewspaper, FaMapMarkerAlt, FaUserFriends, FaUserTie, FaMapMarkedAlt} from 'react-icons/fa';
@@ -24,7 +25,7 @@ import { instanceOf } from 'prop-types';
         password: "",
         usertype: "",
         gender: "",
-        country: "",
+        country: "Zimbabwe",
         city: "",
         dateofbirth: "",
         newsletter: "",
@@ -32,12 +33,66 @@ import { instanceOf } from 'prop-types';
         skills: "",
         bio: "",
         responsetime: '',
-        userDetails: {}
+        userDetails: {}, 
+        passwordconfirm: "",
+        validateusername: [],
+        validateEmailAddress: []
 
         
       };
       this.handleChange = this.handleChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
+       ///check if username already exists
+    //    this.ValidateUsername = () =>{
+    //     axios.post(GRAPHQL_BASE_URL, {
+    //       query: print(FIND_USERNAME), variables: {username: this.state.username}
+    //   }).then((result) => {
+    //       this.setState({validateusername: result.data.data.findUsername});
+    
+    //   }).catch(error => {
+    //     console.log(error.response)
+    // });
+    // if(this.state.validateusername.length>0){
+    //   return<h6 style={{color: 'red'}}>The username <span style={{color: 'rebeccapurple'}}>{this.state.username} </span>is already in use, please try another one.</h6>
+    // }else{
+    //   return<h6></h6>
+    // }
+
+    //   }
+       ///check if email is already in use
+    //    this.ValidateEmailAddress = () =>{
+    // //     axios.post(GRAPHQL_BASE_URL, {
+    // //       query: print(FIND_EMAIL_ADDRESS), variables: {emailaddress: this.state.emailaddress}
+    // //   }).then((result) => {
+    // //       this.setState({validateEmailAddress: result.data.data.findEmailAddress});
+    
+    // //   }).catch(error => {
+    // //     console.log(error.response)
+    // // });
+    // if(this.state.validateEmailAddress.length>0){
+    //   return<h6 style={{color: 'red'}}>The email <span style={{color: 'rebeccapurple'}}>{this.state.emailaddress} </span>is already in use, please try another one.</h6>
+    // }else{
+    //   return<h6></h6>
+    // }
+
+    //   }
+      ///check if passwords match
+      this.PasswordConfirm = () =>{
+
+if(this.state.password==""){
+  return<h6></h6>
+}else{
+  if(this.state.passwordconfirm==""){
+    return<h6></h6>
+  }
+  if(this.state.password!=this.state.passwordconfirm){
+    return<h6 style={{color: 'red'}}>Passwords do not match, please try again.</h6>
+  }
+  if(this.state.password==this.state.passwordconfirm){
+    return<h6></h6>
+  }
+}
+      };
        ///check if user is logged in already
        this.ValidateLogin = () =>{
         const { cookies } = this.props;
@@ -73,7 +128,11 @@ return  <Container style={{border:'1px solid rgba(102, 51, 153, 0.404)'}}>
   </InputGroup><br/> 
   </Col>
 </Row>
-
+<Row>
+  <div>
+    {/* <this.ValidateEmailAddress/> */}
+  </div>
+</Row>
 <Row>
   <Col>
   <Label for="emailaddress">Email</Label>
@@ -92,7 +151,11 @@ return  <Container style={{border:'1px solid rgba(102, 51, 153, 0.404)'}}>
   </InputGroup><br/> 
   </Col>
 </Row>
-
+<Row>
+  <div style={{float: 'left', marginLeft: '5%'}}>
+    {/* <this.ValidateUsername/> */}
+  </div>
+</Row>
  <Row>
   <Col>
   <Label for="username">Username</Label>
@@ -112,15 +175,19 @@ return  <Container style={{border:'1px solid rgba(102, 51, 153, 0.404)'}}>
   </Col>
 </Row>
 
+<Row>
+<div style={{float: 'left', marginLeft: '5%'}}><this.PasswordConfirm/></div>
+</Row>
+
   <Row>
-  {/* <Col>
+  <Col>
   <Label for="passwordconfirm">Confirm Password</Label>
   <InputGroup>
       <InputGroupAddon addonType="prepend" style={{backgroundColor:'#e9ecef', border:'1px solid #ced4da'}}><FaKey style={{margin:'10px'}}/></InputGroupAddon>
           <Input  placeholder="Confirm Password" type="password" name="passwordconfirm" id="passwordconfirm" 
           value={this.state.passwordconfirm} onChange={this.handleChange} />
   </InputGroup><br/>
-  </Col> */}
+  </Col>
   <Col>
   <Label for="usertype">Company / Individual</Label> 
   <InputGroup>
@@ -157,7 +224,6 @@ return  <Container style={{border:'1px solid rgba(102, 51, 153, 0.404)'}}>
       <InputGroupAddon addonType="prepend" style={{backgroundColor:'#e9ecef', border:'1px solid #ced4da'}}><FaMapMarkerAlt style={{margin:'10px'}}/></InputGroupAddon>
       <select className="form-control" name="country" value={this.state.country} 
                  onChange={this.handleChange}>
-         <option key="none" value="">Select Country</option>
          <option key="zimbabwe" value="Zimbabwe">Zimbabwe</option>
 
          </select><br/>  
@@ -165,14 +231,39 @@ return  <Container style={{border:'1px solid rgba(102, 51, 153, 0.404)'}}>
          
   </Col>
   <Col>
-  <Label for="city">City</Label> 
+  <Label for="city">Town / City</Label> 
   <InputGroup>
       <InputGroupAddon addonType="prepend" style={{backgroundColor:'#e9ecef', border:'1px solid #ced4da'}}><FaMapMarkedAlt style={{margin:'10px'}}/></InputGroupAddon>
       <select className="form-control" name="city" value={this.state.city} 
                  onChange={this.handleChange}>
          <option key="none" value="">Select City</option>
          <option key="harare" value="Harare">Harare</option>
-
+         <option key="bulawayo" value="Bulawayo">Bulawayo</option>
+         <option key="chitungwiza" value="Chitungwiza">Chitungwiza</option>
+         <option key="mutare" value="Mutare">Mutare</option>
+         <option key="epworth" value="Epworth">Epworth</option>
+         <option key="gweru" value="Gweru">Gweru</option>
+         <option key="kwekwe" value="Kwekwe">Kwekwe</option>
+         <option key="kadoma" value="Kadoma">Kadoma</option>
+         <option key="masvingo" value="Masvingo">Masvingo</option>
+         <option key="chinhoyi" value="Chinhoyi">Chinhoyi</option>
+         <option key="norton" value="Norton">Norton</option>
+         <option key="marondera" value="Marondera">Marondera</option>
+         <option key="ruwa" value="Ruwa">Ruwa</option>
+         <option key="chegutu" value="Chegutu">Chegutu</option>
+         <option key="zvishavane" value="Zvishavane">Zvishavane</option>
+         <option key="bindura" value="Bindura">Bindura</option>
+         <option key="beitbridge" value="Beitbridge">Beitbridge</option>
+         <option key="redcliff" value="Redcliff">Redcliff</option>
+         <option key="victoriafalls" value="Victoria Falls">Victoria Falls</option>
+         <option key="hwange" value="Hwange">Hwange</option>
+         <option key="rusape" value="Rusape">Rusape</option>
+         <option key="chiredzi" value="Chiredzi">Chiredzi</option>
+         <option key="kariba" value="Kariba">Kariba</option>
+         <option key="karoi" value="Karoi">Karoi</option>
+         <option key="chipinge" value="Chipinge">Chipinge</option>
+         <option key="gokwe" value="Gokwe">Gokwe</option>
+         <option key="shurugwi" value="Shurugwi">Shurugwi</option>
          </select><br/>   
   </InputGroup><br/> 
       
@@ -266,6 +357,18 @@ handleSubmit(e) {
 }).then((result) => {
   this.setState({userDetails: result.data.data.createUser});
     alert('Your account: ' + this.state.username + ' has been registered successfully.');
+    axios.post(GRAPHQL_BASE_URL, {///////////////send welcome notification
+      query: print(CREATE_NOTIFICATION), variables: {
+        userid: result.data.data.createUser.id,
+        notification: "Dear "+result.data.data.createUser.firstname+", welcome to Zimlancer",
+        date: result.data.data.createUser.datejoined,
+        read: "false",
+      }
+  }).then((result2) => {       
+
+  }).catch(error => {
+    console.log(error.response);
+  });//////////////////ends here
     let port = (window.location.port ? ':' + window.location.port : '');
     window.location.href = '//' + window.location.hostname + port + '/login/';
 }).catch(error => {

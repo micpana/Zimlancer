@@ -31,9 +31,9 @@ if(this.state.userServices==""){
         const serviceimage= BACKEND_URL+"images/services/"+service.imagepath1
                 return<Row><a className="lstlink" href={"/"+service.maincategory+"/"+service.subcategory+"/"+service.id}><Col className="cardcol">
                 <Card className="mycard">
-                <CardImg top width="100%" src={serviceimage} alt="Card image cap" style={{maxHeight: '130px'}}/>
+                <CardImg top width="100%" src={serviceimage} alt="Card image cap" style={{maxHeight: '130px', minHeight: '130px'}}/>
                 <CardBody>
-                  <CardTitle><img className="profpic" src={profileimage} style={{borderRadius:'50%'}}/>   {service.username}</CardTitle>
+                  <CardTitle><img className="profpic" src={profileimage} style={{borderRadius:'50%', width: '30px', height: '30px'}}/>   {service.username}</CardTitle>
                   <CardText className="servicetitle">{service.name}</CardText>
                   <CardSubtitle className="pricing">Starting at: <span className="actualprice">${service.price}</span></CardSubtitle>
                 </CardBody>

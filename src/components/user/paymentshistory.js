@@ -49,7 +49,7 @@ amountReceived: []
     render() {
         const paymentsReceived = this.state.amountReceived.map(received => {
             return <tr>
-              <td style={{whiteSpace: 'nowrap'}}>{received.userid}</td>
+              <td style={{whiteSpace: 'nowrap'}}>{received.username}</td>
               <td style={{whiteSpace: 'nowrap'}}>{received.servicename}</td>
               <td style={{whiteSpace: 'nowrap'}}>{received.date}</td>
               <td style={{whiteSpace: 'nowrap'}}>{received.price}</td>
@@ -57,7 +57,7 @@ amountReceived: []
           });
           const paymentsMade = this.state.amountSpent.map(made => {
             return <tr>
-              <td style={{whiteSpace: 'nowrap'}}>{made.sellerid}</td>
+              <td style={{whiteSpace: 'nowrap'}}>{made.sellername}</td>
               <td style={{whiteSpace: 'nowrap'}}>{made.servicename}</td>
               <td style={{whiteSpace: 'nowrap'}}>{made.date}</td>
               <td style={{whiteSpace: 'nowrap'}}>{made.price}</td>
@@ -70,7 +70,7 @@ amountReceived: []
                             <Row>
 <Col style={{maxHeight: '350px',minHeight: '350px', overflowY: 'scroll'}}>
 <h6 style={{color: 'rebeccapurple'}}>Payments Received</h6>
-                        <Table className="mt-4">
+                        <Table>
             <thead>
             <tr>
         
@@ -85,9 +85,12 @@ amountReceived: []
             </tbody>
           </Table>
 </Col>
-<Col style={{maxHeight: '350px', minHeight: '350px', overflowY: 'scroll'}} sm="6">
+</Row>  
+<br/>
+<Row>
+<Col style={{maxHeight: '350px', minHeight: '350px', overflowY: 'scroll'}}>
 <h6 style={{color: 'rebeccapurple'}}>Payments Made</h6>
-                        <Table className="mt-4">
+                        <Table>
             <thead>
             <tr>
         
@@ -102,7 +105,7 @@ amountReceived: []
             </tbody>
           </Table>
 </Col>
-</Row>             
+</Row>
           </Container>
         </div>
       );

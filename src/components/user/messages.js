@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {InputGroup, InputGroupAddon, InputGroupText, Nav, NavItem, NavLink,Input, Col, Row, Form, Button, Label, Container} from 'reactstrap';
 import {GRAPHQL_BASE_URL} from '../graphql/BaseUrlComponent';
-import {SEND_MESSAGE} from '../graphql/MutationResolver';
+import {SEND_MESSAGE, UPDATE_MESSAGE} from '../graphql/MutationResolver';
 import {GET_USER, GET_MESSAGES_BY_RECEIVER, GET_MESSAGES_BY_SENDER, RECEIVED_MESSAGES_BY_USERID, SENT_MESSAGES_BY_USERID, ALL_USERS_MIN_INFO} from '../graphql/QueryResolver';
 import axios from 'axios';
 import {print} from 'graphql';
@@ -51,7 +51,30 @@ registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
       this.handleChange = this.handleChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
       this.handleClick = this.handleClick.bind(this);
+this.updateContactList = () =>{///////////////update contact list
+  const { cookies } = this.props;
+//////all contacts
+axios.post(GRAPHQL_BASE_URL, {
+  query: print(SENT_MESSAGES_BY_USERID), variables: {
+    userid: cookies.get('userId')
+  }
+}).then((result) => {
+  this.setState({sentList: result.data.data.sentMessagesByUserId});
 
+}).catch(error => {
+console.log(error.response)
+});
+axios.post(GRAPHQL_BASE_URL, {/////////////////////////////////////CONTACTS incoming msgs
+  query: print(RECEIVED_MESSAGES_BY_USERID), variables: {
+    userid: cookies.get('userId')
+  }
+}).then((result) => {
+  this.setState({receivedList: result.data.data.receivedMessagesByUserId});
+
+}).catch(error => {
+console.log(error.response)
+});
+};//////////////ends here
        this.MessageView = () =>{
         const { cookies } = this.props;
         //////////////////////////////////////////////check if user is logged in
@@ -65,7 +88,6 @@ registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
   var outgoing = this.state.outgoingMessages
   var chat = incoming.concat(outgoing)
   ///////// sorting allMessages array by date & time**********************************
-  //////////////function 1
   var sortedMessages = chat.sort(function(a,b){
     return new Date(b.date) - new Date(a.date);
   });
@@ -133,24 +155,45 @@ if (contacts.length==0){
 }else{
 ////////displaying messages with sent on the right and received on the left*********************
 const MessageList = sortedMessages.map((message, index) => {
+  const { cookies } = this.props;
+
+if(cookies.get('userId')==message.receiver){////update messages to read
+  axios.post(GRAPHQL_BASE_URL, {//////////////posting the changes
+    query: print(UPDATE_MESSAGE), variables: {
+      id: message.id,
+  sender: message.sender,
+  receiver: message.receiver,
+  message: message.message,
+  date: message.date,
+  filepath1: message.filepath1,
+  filepath2: message.filepath2,
+  filepath3: message.filepath3,
+  read: "true"
+    }
+}).then((result) => {
+var confirmation= result.data.data.updateMessage
+}).catch(error => {
+  console.log(error.response);
+});////////posting ends here
+};//////ends here
 
   const profileimage= BACKEND_URL+"images/profilepictures/"+this.state.userDetails.profilepicturepath
   var profilepic=""
   var username=""
-const userList = this.state.users.map((user, index) => {
+this.state.users.map((user, index) => {//////match sender id and userid
   const { cookies } = this.props;
 if(message.sender==user.id){
 profilepic=user.profilepicturepath
 username=user.username
 }
-})
+})////////ends here
   if (message.sender==cookies.get('userId')){
     var today = new Date();
 var date = today.getFullYear()+'/'+(today.getMonth()+1)+'/'+today.getDate();
 var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds() + ":" + today.getMilliseconds();
 var dateTime = date+' '+time;
     var duration = moment(message.date).from(dateTime)////////returns time passed
-    return<div style={{ marginTop:'10px', marginLeft:'20%'}}>
+    return<div style={{ marginTop:'10px', marginLeft:'40%'}}>
             <Row style={{textAlign: 'left', color: 'rebeccapurple', fontSize:'10px'}}>
             <Col xs="1">
             You
@@ -161,12 +204,13 @@ var dateTime = date+' '+time;
             </Row>
       <Row>
     <Col xs="1">
-    <img src={profileimage} style={{width: '100%', borderRadius: '50%'}}/>
+    <img src={profileimage} onError={this.userIcon} style={{borderRadius: '50%', width: '25px', height: '25px'}}/>
     </Col>
     <Col style={{backgroundColor:'rgba(56, 98, 153, 0.137)', textAlign:'left', borderRadius: '15%'}}>
     {message.message}
     </Col>
-      </Row></div>
+      </Row>
+      </div>
   }else{
     var today = new Date();
     var date = today.getFullYear()+'/'+(today.getMonth()+1)+'/'+today.getDate();
@@ -174,9 +218,9 @@ var dateTime = date+' '+time;
     var dateTime = date+' '+time;
         var duration = moment(message.date).from(dateTime)////////returns time passed
     const profileimage= BACKEND_URL+"images/profilepictures/"+profilepic
-    return<div style={{marginTop: '10px', marginRight:'20%'}}>
+    return<div style={{marginTop: '10px', marginRight:'40%'}}>
       <Row style={{textAlign: 'left', color: 'rebeccapurple', fontSize:'10px'}}>
-            <Col xs="1">
+            <Col>
             {username}
             </Col>
             <Col>
@@ -185,7 +229,7 @@ var dateTime = date+' '+time;
             </Row>
       <Row>
     <Col xs="1">
-    <img src={profileimage} style={{width: '100%', borderRadius: '50%'}}/>
+    <img src={profileimage} onError={this.userIcon} style={{borderRadius: '50%', width: '25px', height: '25px'}}/>
     </Col>
     <Col  style={{backgroundColor:'rgba(56, 98, 153, 0.137)', textAlign:'left', borderRadius: '15%'}}>
     {message.message}
@@ -201,37 +245,53 @@ var dateTime = date+' '+time;
 const SenderList = contactList.map((message, index) => {
   var profilepic=""
     var username=""
+    var receiverusername=""
     const { cookies } = this.props;
-    const userList = this.state.users.map((user, index) => {
-if(message.sender==user.id){
+  this.state.users.map((user, index) => {///////match userid with user info
+if(message.sender==user.id){///match senderid and userid
   profilepic=user.profilepicturepath
   username=user.username
-}
-  })
-
-  if (cookies.get('userId')==message.sender){
+}//ends here
+if(message.receiver==user.id){///match receverid and userid
+  receiverusername=user.username
+}//ends here
+  })//////////ends here
+  var receiver=message.receiver;
+var conversation = contacts.filter(message => message.receiver=== receiver);//////get conversation
+var notRead= conversation.filter(message => message.read=== "false");//////get unread messages
+  var today = new Date();
+    var date = today.getFullYear()+'/'+(today.getMonth()+1)+'/'+today.getDate();
+    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds() + ":" + today.getMilliseconds();
+    var dateTime = date+' '+time;
+    var timePassedSinceLastMessage = moment(message.date).from(dateTime)////////time passed since last message
+  if (cookies.get('userId')==message.sender){//////if the current viewer is the sender
     const profileimage= BACKEND_URL+"images/profilepictures/"+this.state.userDetails.profilepicturepath
-    return <Row  style={{borderBottom:'1px solid #ced4da', display: 'none'}}>
-  <Col xs="3">
-  <img src={profileimage} style={{width: '100%', paddingTop: '3px', paddingBottom: '3px', borderRadius: '50%'}}/>
+    return <Row  style={{borderBottom:'1px solid #ced4da'}}>
+  <Col xs="1">
+  <img src={profileimage} onError={this.userIcon} style={{borderRadius: '50%', width: '30px', height: '30px'}}/>
   </Col>
   <Col>
-  <Button id={message.receiver} onClick={this.handleClick} style={{color: 'rgba(0, 0, 0, 0.5)', fontSize: '15px', border: 'none', backgroundColor: '#fff'}}>You</Button>
+  <Button id={message.receiver} onClick={this.handleClick} style={{color: 'rgba(0, 0, 0, 0.5)', fontSize: '15px', border: 'none', backgroundColor: '#fff'}}>
+  You to {receiverusername}
+  </Button>
   </Col> 
 </Row>
-  }else{
+  }else{//////if the current viewer is not the sender
     const profileimage= BACKEND_URL+"images/profilepictures/"+profilepic
     return <Row  style={{borderBottom:'1px solid #ced4da'}}>
-  <Col xs="3">
-  <img src={profileimage} style={{width: '100%', paddingTop: '3px', paddingBottom: '3px', borderRadius: '50%'}}/>
+  <Col xs="1">
+  <img src={profileimage} onError={this.userIcon} style={{borderRadius: '50%', width: '30px', height: '30px'}}/>
   </Col>
   <Col>
-  <Button id={message.sender} onClick={this.handleClick} style={{color: 'rgba(0, 0, 0, 0.9)', fontSize: '15px', border: 'none', backgroundColor: '#fff'}}>{username}</Button>
+  <Button id={message.sender} onClick={this.handleClick} style={{color: 'rgba(0, 0, 0, 0.9)', fontSize: '15px', border: 'none', backgroundColor: '#fff'}}>
+  {username} <span id={message.sender} style={{color: 'rebeccapurple', fontSize: '10px'}}>({notRead.length} unread)</span>
+  </Button>
   </Col> 
 </Row>
-  }
+  }//////ends here
 
-});
+});////////////ends here
+
  //////////////////////////messages window
  return<Container><br/><br/>
  <Row style={{border: '3px solid #ced4da'}}>
@@ -290,8 +350,41 @@ value={this.state.message} onChange={this.handleChange} />
 
     componentDidMount() {
       const { cookies } = this.props;
-      // this.setState({userid: ""})
+var senderid=this.props.match.params.senderid;
+if(senderid!=null){///////////////////////////////for message clicks outside mailbox eg on navbar
+  const { cookies } = this.props;
+  this.setState({sender: senderid});
+  this.setState({receiver: senderid});
+  
+  axios.post(GRAPHQL_BASE_URL, {//get sent messages
+    query: print(GET_MESSAGES_BY_SENDER), variables: {
+      sender: cookies.get('userId'), 
+      receiver: senderid
+    }
+}).then((result) => {
+    this.setState({outgoingMessages: result.data.data.getMessagesBySender});
+
+}).catch(error => {
+  console.log(error.response)
+});/////////ends here
+
+axios.post(GRAPHQL_BASE_URL, {///////get received messages
+  query: print(GET_MESSAGES_BY_RECEIVER), variables: {
+    receiver: cookies.get('userId'), 
+    sender: senderid
+  }
+}).then((result) => {
+  this.setState({incomingMessages: result.data.data.getMessagesByReceiver});
+
+}).catch(error => {
+console.log(error.response)
+});/////////ends here
+
+}/////////////////////////////////////////ends here
+
       this.interval = setInterval(() => this.updateMessages(), 1000);///update messages evry 1 second
+      this.interval = setInterval(() => this.updateContactList(), 1000);///update contact list evry 1 second
+
       this.setState({userid: cookies.get('userId')})
       if(cookies.get('userId')!=null){
         ///////get user details
@@ -482,6 +575,9 @@ updateMessages(e) {
   });
   }
   
+  userIcon=(e)=>{
+    e.target.src=require("../images/usericon.png")
+  };
 
     render() {
 

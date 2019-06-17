@@ -7,6 +7,9 @@ import Ecommerce from '../images/categories/programmingandtech/ecommerce.jpg'
 import Mobile from '../images/categories/programmingandtech/mobile.jpg'
 import Website from '../images/categories/programmingandtech/website.jpeg'
 import Wordpress from '../images/categories/programmingandtech/wordpress.jpg'
+import {FaMoneyBillAlt} from 'react-icons/fa';
+import { SocialIcon } from 'react-social-icons';
+import ReferAndEarn from '../images/referandearn.png'
 
   class Programming extends Component{
     constructor(props) {
@@ -20,7 +23,31 @@ import Wordpress from '../images/categories/programmingandtech/wordpress.jpg'
     render() {
       return (
         <div className="graphics">
-        <h2 className="grapheading">Programming & Tech</h2>
+         <Row style={{marginTop: '2%', marginBottom: '2%'}}>
+          <Col>
+          <h6 style={{color: 'rebeccapurple', textAlign: 'left', marginLeft: '6%'}}>Follow us on social media</h6>
+          <Row style={{marginLeft: '2%'}}>
+            <Col xs="1">
+            <SocialIcon url="https://www.instagram.com/zimlancer" style={{ height: 25, width: 25 }}/>
+            </Col>
+            <Col xs="1">
+            <SocialIcon url="https://www.facebook.com/zimlancerZW/" style={{ height: 25, width: 25 }}/>
+            </Col>
+            <Col xs="1">
+            <SocialIcon url="https://twitter.com/zimlancer" style={{ height: 25, width: 25 }}/>
+            </Col>
+            <Col xs="1">
+            <SocialIcon url="https://plus.google.com/101601834693120746253" style={{ height: 25, width: 25 }}/>
+            </Col>
+          </Row>
+          </Col>
+ <Col>
+ <h2>Programming & Tech</h2>
+          </Col>
+          <Col>
+          <a href="/dashboard/referralsystem"><h6 style={{color: 'rebeccapurple', marginTop: '10px', float: 'right', paddingRight: '15px'}}><FaMoneyBillAlt color="rebeccapurple" size="30px"/> Refer and earn</h6></a>
+          </Col>
+        </Row>
         <Row className="mainrow">
 
 <Col className="leftsidebar" xs="3">
@@ -31,7 +58,8 @@ import Wordpress from '../images/categories/programmingandtech/wordpress.jpg'
 <h6 className="subcatrow"><a href="/programmingandtech/Chatbots">Chatbots</a></h6>
 <h6 className="subcatrow"><a href="/programmingandtech/Ecommerce">Ecommerce</a></h6>
 <h6 className="subcatrow"><a href="/programmingandtech/Wordpress">Wordpress</a></h6>
-
+<br/>
+<a href="/dashboard/referralsystem"><img src={ReferAndEarn} style={{width: '90%'}}/></a>
 </Col>
 <Col className="subcategories">
         <Row>

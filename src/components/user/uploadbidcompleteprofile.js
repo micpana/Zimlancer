@@ -13,9 +13,14 @@ import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orien
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
 import { BACKEND_URL } from '../backendurl';
+import { withCookies, Cookies } from 'react-cookie';
+import { instanceOf } from 'prop-types';
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 
   class UploadBidCompleteProfile extends Component{
+    static propTypes = {
+      cookies: instanceOf(Cookies).isRequired
+  };
     constructor(props) {
       super(props);
   
@@ -36,7 +41,8 @@ registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
     }
 
     componentDidMount() {
-      this.setState({userid: this.props.userid})
+      const { cookies } = this.props;
+      this.setState({userid: cookies.get('userId')})
       axios.post(GRAPHQL_BASE_URL, {
        query: print(GET_USER), variables: {id: this.props.userid}
    }).then((result) => {
@@ -167,4 +173,4 @@ handleSubmit(e) {
 
   };
   
-  export default UploadBidCompleteProfile;
+  export default withCookies(UploadBidCompleteProfile);
