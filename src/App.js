@@ -26,6 +26,7 @@ import ReferralRegistration from './components/user/referralregistration'
 import Search from './components/listings/resultslist'
 import { withCookies, Cookies } from 'react-cookie';
 import { instanceOf } from 'prop-types';
+import ReactGA from 'react-ga';
 
 
 import { BrowserRouter, Route, Switch, withRouter } from 'react-router-dom';
@@ -35,6 +36,8 @@ class App extends Component {
     cookies: instanceOf(Cookies).isRequired
 };
   render() {
+    ReactGA.initialize('UA-112773396-1');
+ReactGA.pageview(window.location.pathname + window.location.search);
     return (
       <div className="App">
       <Header/>
