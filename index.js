@@ -25,7 +25,8 @@ const PORT = 3008;//Port setup for the server
 
 
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/zimlancer-db');
+// mongoose.connect('mongodb://localhost/zimlancer-db');////////local
+mongoose.connect('mongodb://admin:admin@1234.zimlancer@ds341557.mlab.com:41557/zimlancer1');//////////////live
 
 app.get('/', (req, res) => {
     res.json({
