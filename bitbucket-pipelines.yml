@@ -12,5 +12,5 @@ pipelines:
           - node
         script: # Modify the commands below to build your repository.
           - npm install
-          - npm test
+         # - npm test
           - git push https://heroku:$53725dd3-1b7c-4437-ab2b-e7aaa0cd5806@git.heroku.com/$zimlancer-backend.git HEAD:master
