@@ -19,7 +19,7 @@ const fileUpload = require('express-fileupload')
 //     // optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 //   }
   //cors stuff for live frontend
-var corsOptions = {
+var corsOptions = { 
   origin: ['https://zimlancer.co.zw', 'https://zimlancer.co.zw:3000', 'https://www.zimlancer.co.zw', 'https://www.zimlancer.co.zw:3000','https://zimlancer.netlify.com', 'https://zimlancer.netlify.com:3000']
   // optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 }
