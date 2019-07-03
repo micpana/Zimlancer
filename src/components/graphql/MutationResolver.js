@@ -23,29 +23,29 @@ import gql from 'graphql-tag';
     $subcategory: String!,
     $typeofdelivery: String!
   ){
-    createService(input:{
-      name: $name
-      userid: $userid
-      username: $username
-      price: $price
-      completiontime: $completiontime
-      description: $description
-      rating: $rating
-      views: $views
-      datelisted: $datelisted
-      extras1: $extras1
-      extras2: $extras2
-      extras1price: $extras1price
-      extras2price: $extras2price
-      extras1additionaltime: $extras1additionaltime
-      extras2additionaltime: $extras2additionaltime
-      imagepath1: $imagepath1
-      imagepath2: $imagepath2
-      imagepath3: $imagepath3
-      maincategory: $maincategory
-      subcategory: $subcategory
+    createService(
+      name: $name,
+      userid: $userid,
+      username: $username,
+      price: $price,
+      completiontime: $completiontime,
+      description: $description,
+      rating: $rating,
+      views: $views,
+      datelisted: $datelisted,
+      extras1: $extras1,
+      extras2: $extras2,
+      extras1price: $extras1price,
+      extras2price: $extras2price,
+      extras1additionaltime: $extras1additionaltime,
+      extras2additionaltime: $extras2additionaltime,
+      imagepath1: $imagepath1,
+      imagepath2: $imagepath2,
+      imagepath3: $imagepath3,
+      maincategory: $maincategory,
+      subcategory: $subcategory,
       typeofdelivery: $typeofdelivery
-    }){
+    ){
       id
       name
       userid
@@ -95,30 +95,30 @@ import gql from 'graphql-tag';
     $access: String!,
     $responsetime: Int
   ){
-    createUser(input: {
-      firstname: $firstname
-      surname: $surname
-      emailaddress: $emailaddress
-      username: $username
-      password: $password
-      profilepicturepath: $profilepicturepath
-      datejoined: $datejoined
-      level: $level
-      skills: $skills
-      country: $country
-      city: $city
-      bio: $bio
-      balance: $balance
-      gender: $gender
-      dateofbirth: $dateofbirth
-      newsletter: $newsletter
-      usertype: $usertype
-      phonenumber: $phonenumber
-      plan: $plan
-      active: $active
-      access: $access
+    createUser(
+      firstname: $firstname,
+      surname: $surname,
+      emailaddress: $emailaddress,
+      username: $username,
+      password: $password,
+      profilepicturepath: $profilepicturepath,
+      datejoined: $datejoined,
+      level: $level,
+      skills: $skills,
+      country: $country,
+      city: $city,
+      bio: $bio,
+      balance: $balance,
+      gender: $gender,
+      dateofbirth: $dateofbirth,
+      newsletter: $newsletter,
+      usertype: $usertype,
+      phonenumber: $phonenumber,
+      plan: $plan,
+      active: $active,
+      access: $access,
       responsetime: $responsetime
-    }){
+    ){
       id
       firstname
     surname
@@ -170,30 +170,31 @@ import gql from 'graphql-tag';
     $access: String!,
     $responsetime: Int
   ){
-    updateUser(id: $id, input: {
-      firstname: $firstname
-      surname: $surname
-      emailaddress: $emailaddress
-      username: $username
-      password: $password
-      profilepicturepath: $profilepicturepath
-      datejoined: $datejoined
-      level: $level
-      skills: $skills
-      country: $country
-      city: $city
-      bio: $bio
-      balance: $balance
-      gender: $gender
-      dateofbirth: $dateofbirth
-      newsletter: $newsletter
-      usertype: $usertype
-      phonenumber: $phonenumber
-      plan: $plan
-      active: $active
-      access: $access
+    updateUser(
+      id: $id,
+      firstname: $firstname,
+      surname: $surname,
+      emailaddress: $emailaddress,
+      username: $username,
+      password: $password,
+      profilepicturepath: $profilepicturepath,
+      datejoined: $datejoined,
+      level: $level,
+      skills: $skills,
+      country: $country,
+      city: $city,
+      bio: $bio,
+      balance: $balance,
+      gender: $gender,
+      dateofbirth: $dateofbirth,
+      newsletter: $newsletter,
+      usertype: $usertype,
+      phonenumber: $phonenumber,
+      plan: $plan,
+      active: $active,
+      access: $access,
       responsetime: $responsetime
-    }){
+    ){
       id
       firstname
     surname
@@ -236,22 +237,22 @@ export const CREATE_SERVICE_BID=gql` mutation createServiceBid(
     $expirationdate: String!,
     $bidimage: String!
 ){
-  createServiceBid(input: {
-    name: $name
-    userid: $userid
-    username: $username
-    payout: $payout
-    expectedcompletiontime: $expectedcompletiontime
-    typeofdelivery: $typeofdelivery
-    numberofbids: $numberofbids
-    description: $description
-    maincategory: $maincategory
-    subcategory: $subcategory
-    active: $active
-    datelisted: $datelisted
-    expirationdate: $expirationdate
+  createServiceBid(
+    name: $name,
+    userid: $userid,
+    username: $username,
+    payout: $payout,
+    expectedcompletiontime: $expectedcompletiontime,
+    typeofdelivery: $typeofdelivery,
+    numberofbids: $numberofbids,
+    description: $description,
+    maincategory: $maincategory,
+    subcategory: $subcategory,
+    active: $active,
+    datelisted: $datelisted,
+    expirationdate: $expirationdate,
     bidimage: $bidimage
-  }){
+  ){
     id
     name
     userid
@@ -279,16 +280,16 @@ export const SEND_MESSAGE=gql` mutation createMessage(
   $filepath3: String,
   $read: String!
 ){
-createMessage(input: {
-  sender: $sender
-  receiver: $receiver
-  message: $message
-  date: $date
-  filepath1: $filepath1
-  filepath2: $filepath2
-  filepath3: $filepath3
+createMessage(
+  sender: $sender,
+  receiver: $receiver,
+  message: $message,
+  date: $date,
+  filepath1: $filepath1,
+  filepath2: $filepath2,
+  filepath3: $filepath3,
   read: $read
-}){
+){
   id
   sender
   receiver
@@ -306,11 +307,11 @@ export const ADD_PROFILE_VIEW=gql` mutation addProfileView(
   $viewerid: String,
   $date: String!
 ){
-addProfileView(input: {
-  userid: $userid
-  viewerid: $viewerid
+addProfileView(
+  userid: $userid,
+  viewerid: $viewerid,
   date: $date
-}){
+){
     id
     userid
     viewerid
@@ -326,14 +327,14 @@ export const ADD_INTEREST=gql` mutation createInterests(
   $serviceid: String
   $sellerid: String
 ){
-createInterests(input: {
-    userid: $userid
-    maincategory: $maincategory
-    subcategory: $subcategory
-    date: $date
-    serviceid: $serviceid
+createInterests(
+    userid: $userid,
+    maincategory: $maincategory,
+    subcategory: $subcategory,
+    date: $date,
+    serviceid: $serviceid,
     sellerid: $sellerid
-}){
+){
   userid
   maincategory
   subcategory
@@ -346,9 +347,9 @@ createInterests(input: {
 export const ADD_CATEGORY=gql` mutation createCategory(
   $category: String!,
 ){
-  createCategory(input: {
+  createCategory(
     category: $category
-  }){
+  ){
     id
     category
   }
@@ -358,10 +359,10 @@ export const ADD_SUBCATEGORY=gql` mutation createSubCategory(
   $parentcategory: String!,
   $subcategory: String!
 ){
-  createSubCategory(input: {
-parentcategory: $parentcategory
+  createSubCategory(
+parentcategory: $parentcategory,
 subcategory: $subcategory
-  }){
+  ){
     id
     parentcategory
     subcategory
@@ -373,10 +374,11 @@ export const UPDATE_TRANSACTION_FEE=gql` mutation updateTransactionFee(
  $fixedamount: Int!,
  $percentage: Int!
 ){
-  updateTransactionFee(id: $id, input: {
-    fixedamount: $fixedamount
+  updateTransactionFee(
+    id: $id,
+    fixedamount: $fixedamount,
     percentage: $percentage
-  }){
+  ){
     id
     fixedamount
     percentage
@@ -388,11 +390,11 @@ export const ADD_REFERRAL=gql` mutation addReferral(
   $referredby: String!,
   $date: String!
  ){
-  addReferral(input: {
-    userid: $userid
-    referredby: $referredby
+  addReferral(
+    userid: $userid,
+    referredby: $referredby,
     date: $date
-  }){
+  ){
     id
     userid
     referredby
@@ -405,11 +407,11 @@ export const ADD_REFERRAL=gql` mutation addReferral(
   $referredby: String!,
   $date: String!
  ){
-  addReferralClicks(input: {
-    userid: $userid
-    referredby: $referredby
+  addReferralClicks(
+    userid: $userid,
+    referredby: $referredby,
     date: $date
-  }){
+  ){
     id
     userid
     referredby
@@ -425,14 +427,14 @@ export const ADD_REFERRAL=gql` mutation addReferral(
   $rating: Int!,
   $date: String!
  ){
-  createServiceReview(input: {
-    serviceid: $serviceid
-    userid: $userid
-    sellerid: $sellerid
-    review: $review
-    rating: $rating
+  createServiceReview(
+    serviceid: $serviceid,
+    userid: $userid,
+    sellerid: $sellerid,
+    review: $review,
+    rating: $rating,
     date: $date
-  }){
+  ){
     id
     serviceid
     userid
@@ -451,13 +453,14 @@ export const ADD_REFERRAL=gql` mutation addReferral(
   $read: String!,
   $href: String
  ){
-  updateNotification(id: $id, input: {
-    userid: $userid
-    notification: $notification
-    date: $date
-    read: $read
+  updateNotification(
+    id: $id,
+    userid: $userid,
+    notification: $notification,
+    date: $date,
+    read: $read,
     href: $href
-  }){
+  ){
     id
     userid
     notification
@@ -474,13 +477,13 @@ export const ADD_REFERRAL=gql` mutation addReferral(
   $read: String!,
   $href: String
  ){
-  createNotification(input: {
-    userid: $userid
-    notification: $notification
-    date: $date
-    read: $read
+  createNotification(
+    userid: $userid,
+    notification: $notification,
+    date: $date,
+    read: $read,
     href: $href
-  }){
+  ){
     id
     userid
     notification
@@ -495,11 +498,11 @@ export const ADD_REFERRAL=gql` mutation addReferral(
   $searchitem: String!,
   $date: String!
  ){
-  createSearches(input: {
-    userid: $userid
-    searchitem: $searchitem
+  createSearches(
+    userid: $userid,
+    searchitem: $searchitem,
     date: $date
-  }){
+  ){
     id
     userid
     searchitem
@@ -515,13 +518,13 @@ export const ADD_REFERRAL=gql` mutation addReferral(
   $comment: String!,
   $datelisted: String!
  ){
-  createBidComment(input: {
-    userid: $userid
-    sellerid: $sellerid
-    bidid: $bidid
-    comment: $comment
+  createBidComment(
+    userid: $userid,
+    sellerid: $sellerid,
+    bidid: $bidid,
+    comment: $comment,
     datelisted: $datelisted
-  }){
+  ){
     id
     userid
     sellerid
@@ -549,23 +552,24 @@ export const ADD_REFERRAL=gql` mutation addReferral(
   $bidimage: String!,
   $wonby: String
 ){
-updateServiceBid(id: $id, input: {
-  name: $name
-  userid: $userid
-  username: $username
-  payout: $payout
-  expectedcompletiontime: $expectedcompletiontime
-  typeofdelivery: $typeofdelivery
-  numberofbids: $numberofbids
-  description: $description
-  maincategory: $maincategory
-  subcategory: $subcategory
-  active: $active
-  datelisted: $datelisted
-  expirationdate: $expirationdate
-  bidimage: $bidimage
+updateServiceBid(
+  id: $id,
+  name: $name,
+  userid: $userid,
+  username: $username,
+  payout: $payout,
+  expectedcompletiontime: $expectedcompletiontime,
+  typeofdelivery: $typeofdelivery,
+  numberofbids: $numberofbids,
+  description: $description,
+  maincategory: $maincategory,
+  subcategory: $subcategory,
+  active: $active,
+  datelisted: $datelisted,
+  expirationdate: $expirationdate,
+  bidimage: $bidimage,
   wonby: $wonby
-}){
+){
   id
   name
   userid
@@ -596,16 +600,17 @@ export const UPDATE_MESSAGE=gql` mutation updateMessage(
   $filepath3: String,
   $read: String!
 ){
-updateMessage(id: $id, input: {
-  sender: $sender
-  receiver: $receiver
-  message: $message
-  date: $date
-  filepath1: $filepath1
-  filepath2: $filepath2
-  filepath3: $filepath3
+updateMessage(
+  id: $id,
+  sender: $sender,
+  receiver: $receiver,
+  message: $message,
+  date: $date,
+  filepath1: $filepath1,
+  filepath2: $filepath2,
+  filepath3: $filepath3,
   read: $read
-}){
+){
   id
   sender
   receiver
