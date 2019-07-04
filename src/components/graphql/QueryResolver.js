@@ -784,7 +784,7 @@ export const ALL_COMMISSIONS=gql`query {
   }
 }`;
 
-export const GET_SELLER_RATING=gql`query getSellerRating($sellerid: String){
+export const GET_SELLER_RATING=gql`query getSellerRating($sellerid: String!){
   getSellerRating(sellerid: $sellerid){
     id
     serviceid
