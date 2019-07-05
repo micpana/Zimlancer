@@ -110,6 +110,7 @@ import {print} from 'graphql';
   
     onMouseLeave() {
       this.setState({dropdownOpen: false});
+      this.setState({subcategories: []});  
     }
 
     dtoggle2() {
@@ -143,6 +144,7 @@ import {print} from 'graphql';
   
     onMouseLeave2() {
       this.setState({dropdownOpen2: false});
+      this.setState({subcategories: []});  
     }
 
     dtoggle3() {
@@ -176,6 +178,7 @@ import {print} from 'graphql';
   
     onMouseLeave3() {
       this.setState({dropdownOpen3: false});
+      this.setState({subcategories: []});  
     }
 
     dtoggle4() {
@@ -209,6 +212,7 @@ import {print} from 'graphql';
   
     onMouseLeave4() {
       this.setState({dropdownOpen4: false});
+      this.setState({subcategories: []});  
     }
 
     dtoggle5() {
@@ -242,6 +246,7 @@ import {print} from 'graphql';
   
     onMouseLeave5() {
       this.setState({dropdownOpen5: false});
+      this.setState({subcategories: []});  
     }
     dtoggle6() {
       this.setState(prevState => ({
@@ -274,6 +279,7 @@ import {print} from 'graphql';
   
     onMouseLeave6() {
       this.setState({dropdownOpen6: false});
+      this.setState({subcategories: []});  
     }
     dtoggle7() {
       this.setState(prevState => ({
@@ -306,6 +312,7 @@ import {print} from 'graphql';
   
     onMouseLeave7() {
       this.setState({dropdownOpen7: false});
+      this.setState({subcategories: []});  
     }
     dtoggle8() {
       this.setState(prevState => ({
@@ -338,6 +345,7 @@ import {print} from 'graphql';
   
     onMouseLeave8() {
       this.setState({dropdownOpen8: false});
+      this.setState({subcategories: []});  
     }
     render() {
       return (
