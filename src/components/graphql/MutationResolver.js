@@ -9,7 +9,7 @@ import gql from 'graphql-tag';
     $description: String!,
     $rating: Int!,
     $views: Int!,
-    $datelisted: String,
+    $datelisted: String!,
     $extras1: String,
     $extras2: String,
     $extras1price: Int,
