@@ -27,6 +27,8 @@ import Search from './components/listings/resultslist'
 import { withCookies, Cookies } from 'react-cookie';
 import { instanceOf } from 'prop-types';
 import ReactGA from 'react-ga';
+import Navbar from './components/header/navbar'
+import Categoriesbar from './components/header/categoriesbar'
 
 
 import { BrowserRouter, Route, Switch, withRouter } from 'react-router-dom';
@@ -40,8 +42,9 @@ class App extends Component {
 ReactGA.pageview(window.location.pathname + window.location.search);
     return (
       <div className="App">
-      <Header/>
-      <BrowserRouter>
+ <Navbar/>
+      <Categoriesbar/>
+            <BrowserRouter>
                     <Switch>
                         <Route path='/' exact={true} component={Home}/>
                         <Route path='/graphicsanddesign/' exact={true} component={Graphics}/>
