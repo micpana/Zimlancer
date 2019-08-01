@@ -496,8 +496,7 @@ userIcon=(e)=>{
     render() {
       
       return (
-        <div >
-          <Navbar color="light" light expand="md">
+          <Navbar color="light" light expand="md" sticky="top">
             <NavbarBrand href="/"><img className="logo" src={logo}/>
             </NavbarBrand>
             <a href="/" className="sitename"><span style={{color:'#40356F', fontWeight:'bold'}}>ZIM</span>LANCER</a>
@@ -524,7 +523,6 @@ userIcon=(e)=>{
               </Nav>
             </Collapse>
           </Navbar>
-        </div>
       );
     }
 
