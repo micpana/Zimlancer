@@ -372,7 +372,7 @@ Delivery time:
       var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds() + ":" + today.getMilliseconds();
       var dateTime = date+' '+time;
       axios.post(GRAPHQL_BASE_URL, {
-          query: print(GET_SERVICE_BY_ID), variables: {id: this.props.serviceid}
+          query: print(GET_SERVICE_BY_ID), variables: {id: this.props.match.params.serviceid}
       }).then((result) => {
           this.setState({serviceDetails: result.data.data.getService});
           this.setState({imageOnDisplay: result.data.data.getService.imagepath1});
