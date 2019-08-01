@@ -56,7 +56,7 @@ getSellerRating: []
       console.log(error.response)
   });//////ends here
       axios.post(GRAPHQL_BASE_URL, {/////////////get user details
-          query: print(GET_USER), variables: {id: this.props.match.params.userid}
+          query: print(GET_USER), variables: {id: this.props.userid}
       }).then((result) => {
           this.setState({userDetails: result.data.data.getUser});
 
