@@ -496,7 +496,7 @@ userIcon=(e)=>{
     render() {
       
       return (
-          <Navbar color="light" light expand="md" sticky="top">
+          <Navbar color="light" light expand="md" sticky="top" style={{boxShadow: '0 8px 16px 0 rgba(56, 98, 153, 0.137)'}}>
             <NavbarBrand href="/"><img className="logo" src={logo}/>
             </NavbarBrand>
             <a href="/" className="sitename"><span style={{color:'#40356F', fontWeight:'bold'}}>ZIM</span>LANCER</a>

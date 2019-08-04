@@ -86,24 +86,6 @@ import {print} from 'graphql';
     }
   
     onMouseEnter(e) {
-      if(e.target.id!=""){
-        this.setState({category: e.target.id})
-        axios.post(GRAPHQL_BASE_URL, {//////////get subcategories
-          query: print(GET_SUBCATEGORIES_BY_CATEGORY), variables: {parentcategory: e.target.id}
-      }).then((result) => {
-          this.setState({subcategories: result.data.data.getSubCategoryByCategory});  
-      }).catch(error => {
-        console.log(error.response)
-      });
-      }else{
-        axios.post(GRAPHQL_BASE_URL, {//////////get subcategories
-          query: print(GET_SUBCATEGORIES_BY_CATEGORY), variables: {parentcategory: this.state.category}
-      }).then((result) => {
-          this.setState({subcategories: result.data.data.getSubCategoryByCategory});  
-      }).catch(error => {
-        console.log(error.response)
-      });
-      }
    
     this.setState({dropdownOpen: true});
     }
@@ -120,24 +102,6 @@ import {print} from 'graphql';
     }
   
     onMouseEnter2(e) {
-      if(e.target.id!=""){
-        this.setState({category: e.target.id})
-        axios.post(GRAPHQL_BASE_URL, {//////////get subcategories
-          query: print(GET_SUBCATEGORIES_BY_CATEGORY), variables: {parentcategory: e.target.id}
-      }).then((result) => {
-          this.setState({subcategories: result.data.data.getSubCategoryByCategory});  
-      }).catch(error => {
-        console.log(error.response)
-      });
-      }else{
-        axios.post(GRAPHQL_BASE_URL, {//////////get subcategories
-          query: print(GET_SUBCATEGORIES_BY_CATEGORY), variables: {parentcategory: this.state.category}
-      }).then((result) => {
-          this.setState({subcategories: result.data.data.getSubCategoryByCategory});  
-      }).catch(error => {
-        console.log(error.response)
-      });
-      }
    
     this.setState({dropdownOpen2: true});
     }
@@ -154,24 +118,6 @@ import {print} from 'graphql';
     }
   
     onMouseEnter3(e) {
-      if(e.target.id!=""){
-        this.setState({category: e.target.id})
-        axios.post(GRAPHQL_BASE_URL, {//////////get subcategories
-          query: print(GET_SUBCATEGORIES_BY_CATEGORY), variables: {parentcategory: e.target.id}
-      }).then((result) => {
-          this.setState({subcategories: result.data.data.getSubCategoryByCategory});  
-      }).catch(error => {
-        console.log(error.response)
-      });
-      }else{
-        axios.post(GRAPHQL_BASE_URL, {//////////get subcategories
-          query: print(GET_SUBCATEGORIES_BY_CATEGORY), variables: {parentcategory: this.state.category}
-      }).then((result) => {
-          this.setState({subcategories: result.data.data.getSubCategoryByCategory});  
-      }).catch(error => {
-        console.log(error.response)
-      });
-      }
    
     this.setState({dropdownOpen3: true});
     }
@@ -188,25 +134,6 @@ import {print} from 'graphql';
     }
   
     onMouseEnter4(e) {
-      if(e.target.id!=""){
-        this.setState({category: e.target.id})
-        axios.post(GRAPHQL_BASE_URL, {//////////get subcategories
-          query: print(GET_SUBCATEGORIES_BY_CATEGORY), variables: {parentcategory: e.target.id}
-      }).then((result) => {
-          this.setState({subcategories: result.data.data.getSubCategoryByCategory});  
-      }).catch(error => {
-        console.log(error.response)
-      });
-      }else{
-        axios.post(GRAPHQL_BASE_URL, {//////////get subcategories
-          query: print(GET_SUBCATEGORIES_BY_CATEGORY), variables: {parentcategory: this.state.category}
-      }).then((result) => {
-          this.setState({subcategories: result.data.data.getSubCategoryByCategory});  
-      }).catch(error => {
-        console.log(error.response)
-      });
-      }
-   
     this.setState({dropdownOpen4: true});
     }
   
@@ -222,26 +149,7 @@ import {print} from 'graphql';
     }
   
     onMouseEnter5(e) {
-      if(e.target.id!=""){
-        this.setState({category: e.target.id})
-        axios.post(GRAPHQL_BASE_URL, {//////////get subcategories
-          query: print(GET_SUBCATEGORIES_BY_CATEGORY), variables: {parentcategory: e.target.id}
-      }).then((result) => {
-          this.setState({subcategories: result.data.data.getSubCategoryByCategory});  
-      }).catch(error => {
-        console.log(error.response)
-      });
-      }else{
-        axios.post(GRAPHQL_BASE_URL, {//////////get subcategories
-          query: print(GET_SUBCATEGORIES_BY_CATEGORY), variables: {parentcategory: this.state.category}
-      }).then((result) => {
-          this.setState({subcategories: result.data.data.getSubCategoryByCategory});  
-      }).catch(error => {
-        console.log(error.response)
-      });
-      }
-   
-    this.setState({dropdownOpen5: true});
+      this.setState({dropdownOpen5: true});
     }
   
     onMouseLeave5() {
@@ -255,24 +163,6 @@ import {print} from 'graphql';
     }
   
     onMouseEnter6(e) {
-      if(e.target.id!=""){
-        this.setState({category: e.target.id})
-        axios.post(GRAPHQL_BASE_URL, {//////////get subcategories
-          query: print(GET_SUBCATEGORIES_BY_CATEGORY), variables: {parentcategory: e.target.id}
-      }).then((result) => {
-          this.setState({subcategories: result.data.data.getSubCategoryByCategory});  
-      }).catch(error => {
-        console.log(error.response)
-      });
-      }else{
-        axios.post(GRAPHQL_BASE_URL, {//////////get subcategories
-          query: print(GET_SUBCATEGORIES_BY_CATEGORY), variables: {parentcategory: this.state.category}
-      }).then((result) => {
-          this.setState({subcategories: result.data.data.getSubCategoryByCategory});  
-      }).catch(error => {
-        console.log(error.response)
-      });
-      }
    
     this.setState({dropdownOpen6: true});
     }
@@ -288,24 +178,6 @@ import {print} from 'graphql';
     }
   
     onMouseEnter7(e) {
-      if(e.target.id!=""){
-        this.setState({category: e.target.id})
-        axios.post(GRAPHQL_BASE_URL, {//////////get subcategories
-          query: print(GET_SUBCATEGORIES_BY_CATEGORY), variables: {parentcategory: e.target.id}
-      }).then((result) => {
-          this.setState({subcategories: result.data.data.getSubCategoryByCategory});  
-      }).catch(error => {
-        console.log(error.response)
-      });
-      }else{
-        axios.post(GRAPHQL_BASE_URL, {//////////get subcategories
-          query: print(GET_SUBCATEGORIES_BY_CATEGORY), variables: {parentcategory: this.state.category}
-      }).then((result) => {
-          this.setState({subcategories: result.data.data.getSubCategoryByCategory});  
-      }).catch(error => {
-        console.log(error.response)
-      });
-      }
    
     this.setState({dropdownOpen7: true});
     }
@@ -321,24 +193,6 @@ import {print} from 'graphql';
     }
   
     onMouseEnter8(e) {
-      if(e.target.id!=""){
-        this.setState({category: e.target.id})
-        axios.post(GRAPHQL_BASE_URL, {//////////get subcategories
-          query: print(GET_SUBCATEGORIES_BY_CATEGORY), variables: {parentcategory: e.target.id}
-      }).then((result) => {
-          this.setState({subcategories: result.data.data.getSubCategoryByCategory});  
-      }).catch(error => {
-        console.log(error.response)
-      });
-      }else{
-        axios.post(GRAPHQL_BASE_URL, {//////////get subcategories
-          query: print(GET_SUBCATEGORIES_BY_CATEGORY), variables: {parentcategory: this.state.category}
-      }).then((result) => {
-          this.setState({subcategories: result.data.data.getSubCategoryByCategory});  
-      }).catch(error => {
-        console.log(error.response)
-      });
-      }
    
     this.setState({dropdownOpen8: true});
     }
@@ -350,7 +204,7 @@ import {print} from 'graphql';
     render() {
       return (
         // <div className="catnav">
-          <Navbar color="light" light expand="md">
+          <Navbar color="light" light expand="md" style={{boxShadow: '0 8px 16px 0 rgba(56, 98, 153, 0.137), 0 6px 20px 0 rgba(66, 56, 153, 0.24)'}}>
             <NavbarToggler onClick={this.toggle} />
             <Collapse isOpen={this.state.isOpen} navbar>
               <Nav className="categoriesnav" navbar>
@@ -361,11 +215,49 @@ import {print} from 'graphql';
                   <NavLink id="Graphics & Design" style={{color: 'black'}}>Graphics & Design</NavLink>
                 </NavItem>
         </DropdownToggle>
-        <DropdownMenu style={{marginTop: '95%'}}>
-            {this.state.subcategories.map((subcategory, index) => 
-           <DropdownItem key={subcategory.subcategory}  href={"/graphicsanddesign/"+ subcategory.subcategory}>
-           <a style={{color: 'rgba(0, 0, 0, 0.5)'}}>{subcategory.subcategory}</a>
-           </DropdownItem>)}
+        <DropdownMenu>
+           <DropdownItem href="/graphicsanddesign/Logo Design">
+           <a style={{color: 'rgba(0, 0, 0, 0.5)'}}>Logo Design</a>
+           </DropdownItem>
+           <DropdownItem href="/graphicsanddesign/Flyers & Brochures">
+           <a style={{color: 'rgba(0, 0, 0, 0.5)'}}>Flyers & Brochures</a>
+           </DropdownItem>
+           <DropdownItem href="/graphicsanddesign/Packaging Design">
+           <a style={{color: 'rgba(0, 0, 0, 0.5)'}}>Packaging Design</a>
+           </DropdownItem>
+           <DropdownItem href="/graphicsanddesign/Book & Album Covers">
+           <a style={{color: 'rgba(0, 0, 0, 0.5)'}}>Book & Album Covers</a>
+           </DropdownItem>
+           <DropdownItem href="/graphicsanddesign/Potraits & Caricatures">
+           <a style={{color: 'rgba(0, 0, 0, 0.5)'}}>Potraits & Caricatures</a>
+           </DropdownItem>
+           <DropdownItem href="/graphicsanddesign/Business Cards">
+           <a style={{color: 'rgba(0, 0, 0, 0.5)'}}>Business Cards</a>
+           </DropdownItem>
+           <DropdownItem href="/graphicsanddesign/Presentation Design">
+           <a style={{color: 'rgba(0, 0, 0, 0.5)'}}>Presentation Design</a>
+           </DropdownItem>
+           <DropdownItem href="/graphicsanddesign/Infographic Design">
+           <a style={{color: 'rgba(0, 0, 0, 0.5)'}}>Infographic Design</a>
+           </DropdownItem>
+           <DropdownItem href="/graphicsanddesign/Architecture">
+           <a style={{color: 'rgba(0, 0, 0, 0.5)'}}>Architecture</a>
+           </DropdownItem>
+           <DropdownItem href="/graphicsanddesign/Tshirts">
+           <a style={{color: 'rgba(0, 0, 0, 0.5)'}}>Tshirts</a>
+           </DropdownItem>
+           <DropdownItem href="/graphicsanddesign/Photoshop Editing">
+           <a style={{color: 'rgba(0, 0, 0, 0.5)'}}>Photoshop Editing</a>
+           </DropdownItem>
+           <DropdownItem href="/graphicsanddesign/Banner Ads">
+           <a style={{color: 'rgba(0, 0, 0, 0.5)'}}>Banner Ads</a>
+           </DropdownItem>
+           <DropdownItem href="/graphicsanddesign/Invitations">
+           <a style={{color: 'rgba(0, 0, 0, 0.5)'}}>Invitations</a>
+           </DropdownItem>
+           <DropdownItem href="/graphicsanddesign/Social Media">
+           <a style={{color: 'rgba(0, 0, 0, 0.5)'}}>Social Media</a>
+           </DropdownItem>
         </DropdownMenu>
       </Dropdown>
 
@@ -376,10 +268,24 @@ import {print} from 'graphql';
                 </NavItem>
         </DropdownToggle>
         <DropdownMenu>
-            {this.state.subcategories.map((subcategory, index) => 
-           <DropdownItem key={subcategory.subcategory} href={"/digitalmarketing/"+ subcategory.subcategory}>
-           <a style={{color: 'rgba(0, 0, 0, 0.5)'}}>{subcategory.subcategory}</a>
-           </DropdownItem>)}
+           <DropdownItem href="/digitalmarketing/Video Marketing">
+           <a style={{color: 'rgba(0, 0, 0, 0.5)'}}>Video Marketing</a>
+           </DropdownItem>
+           <DropdownItem href="/digitalmarketing/Influencer Marketing">
+           <a style={{color: 'rgba(0, 0, 0, 0.5)'}}>Influencer Marketing</a>
+           </DropdownItem>
+           <DropdownItem href="/digitalmarketing/Social Media Marketing">
+           <a style={{color: 'rgba(0, 0, 0, 0.5)'}}>Social Media Marketing</a>
+           </DropdownItem>
+           <DropdownItem href="/digitalmarketing/Email Marketing">
+           <a style={{color: 'rgba(0, 0, 0, 0.5)'}}>Email Marketing</a>
+           </DropdownItem>
+           <DropdownItem href="/digitalmarketing/Search Engine Optimization">
+           <a style={{color: 'rgba(0, 0, 0, 0.5)'}}>Search Engine Optimization</a>
+           </DropdownItem>
+           <DropdownItem href="/digitalmarketing/Music Promotion">
+           <a style={{color: 'rgba(0, 0, 0, 0.5)'}}>Music Promotion</a>
+           </DropdownItem>
         </DropdownMenu>
       </Dropdown>
          
@@ -390,10 +296,24 @@ import {print} from 'graphql';
                 </NavItem>
         </DropdownToggle>
         <DropdownMenu>
-            {this.state.subcategories.map((subcategory, index) => 
-           <DropdownItem key={subcategory.subcategory} href={"/programmingandtech/"+ subcategory.subcategory}>
-           <a style={{color: 'rgba(0, 0, 0, 0.5)'}}>{subcategory.subcategory}</a>
-           </DropdownItem>)}
+           <DropdownItem href="/programmingandtech/Mobile Apps">
+           <a style={{color: 'rgba(0, 0, 0, 0.5)'}}>Mobile Apps</a>
+           </DropdownItem>
+           <DropdownItem href="/programmingandtech/Websites & Web Apps">
+           <a style={{color: 'rgba(0, 0, 0, 0.5)'}}>Websites & Web Apps</a>
+           </DropdownItem>
+           <DropdownItem href="/programmingandtech/Desktop Applications">
+           <a style={{color: 'rgba(0, 0, 0, 0.5)'}}>Desktop Applications</a>
+           </DropdownItem>
+           <DropdownItem href="/programmingandtech/Chatbots">
+           <a style={{color: 'rgba(0, 0, 0, 0.5)'}}>Chatbots</a>
+           </DropdownItem>
+           <DropdownItem href="/programmingandtech/Ecommerce">
+           <a style={{color: 'rgba(0, 0, 0, 0.5)'}}>Ecommerce</a>
+           </DropdownItem>
+           <DropdownItem href="/programmingandtech/Wordpress">
+           <a style={{color: 'rgba(0, 0, 0, 0.5)'}}>Wordpress</a>
+           </DropdownItem>
         </DropdownMenu>
       </Dropdown>
               
@@ -404,10 +324,27 @@ import {print} from 'graphql';
                 </NavItem>
         </DropdownToggle>
         <DropdownMenu>
-            {this.state.subcategories.map((subcategory, index) => 
-           <DropdownItem key={subcategory.subcategory} href={"/videoandanimation/"+ subcategory.subcategory}>
-           <a style={{color: 'rgba(0, 0, 0, 0.5)'}}>{subcategory.subcategory}</a>
-           </DropdownItem>)}
+           <DropdownItem href="/videoandanimation/Whiteboard & Animated Explainers">
+           <a style={{color: 'rgba(0, 0, 0, 0.5)'}}>Whiteboard & Animated Explainers</a>
+           </DropdownItem>
+           <DropdownItem href="/videoandanimation/Intros & Outros">
+           <a style={{color: 'rgba(0, 0, 0, 0.5)'}}>Intros & Outros</a>
+           </DropdownItem>
+           <DropdownItem href="/videoandanimation/Short Video Ads">
+           <a style={{color: 'rgba(0, 0, 0, 0.5)'}}>Short Video Ads</a>
+           </DropdownItem>
+           <DropdownItem href="/videoandanimation/Spokesperson Videos">
+           <a style={{color: 'rgba(0, 0, 0, 0.5)'}}>Spokesperson Videos</a>
+           </DropdownItem>
+           <DropdownItem href="/videoandanimation/Video Editing">
+           <a style={{color: 'rgba(0, 0, 0, 0.5)'}}>Video Editing</a>
+           </DropdownItem>
+           <DropdownItem href="/videoandanimation/Animations">
+           <a style={{color: 'rgba(0, 0, 0, 0.5)'}}>Animations</a>
+           </DropdownItem>
+           <DropdownItem href="/videoandanimation/Visual Effects">
+           <a style={{color: 'rgba(0, 0, 0, 0.5)'}}>Visual Effects</a>
+           </DropdownItem>
         </DropdownMenu>
       </Dropdown>
              
@@ -418,10 +355,24 @@ import {print} from 'graphql';
                 </NavItem>
         </DropdownToggle>
         <DropdownMenu>
-            {this.state.subcategories.map((subcategory, index) => 
-           <DropdownItem key={subcategory.subcategory} href={"/musicandaudio/"+ subcategory.subcategory}>
-           <a style={{color: 'rgba(0, 0, 0, 0.5)'}}>{subcategory.subcategory}</a>
-           </DropdownItem>)}
+           <DropdownItem href="/musicandaudio/Voice Over">
+           <a style={{color: 'rgba(0, 0, 0, 0.5)'}}>Voice Over</a>
+           </DropdownItem>
+           <DropdownItem href="/musicandaudio/Mixing & Mastering">
+           <a style={{color: 'rgba(0, 0, 0, 0.5)'}}>Mixing & Mastering</a>
+           </DropdownItem>
+           <DropdownItem href="/musicandaudio/Producers">
+           <a style={{color: 'rgba(0, 0, 0, 0.5)'}}>Producers</a>
+           </DropdownItem>
+           <DropdownItem href="/musicandaudio/Song writers">
+           <a style={{color: 'rgba(0, 0, 0, 0.5)'}}>Song writers</a>
+           </DropdownItem>
+           <DropdownItem href="/musicandaudio/Singers">
+           <a style={{color: 'rgba(0, 0, 0, 0.5)'}}>Singers</a>
+           </DropdownItem>
+           <DropdownItem href="/musicandaudio/Composers">
+           <a style={{color: 'rgba(0, 0, 0, 0.5)'}}>Composers</a>
+           </DropdownItem>
         </DropdownMenu>
       </Dropdown>
               
@@ -432,10 +383,24 @@ import {print} from 'graphql';
                 </NavItem>
         </DropdownToggle>
         <DropdownMenu>
-            {this.state.subcategories.map((subcategory, index) => 
-           <DropdownItem key={subcategory.subcategory} href={"/business/"+ subcategory.subcategory}>
-           <a style={{color: 'rgba(0, 0, 0, 0.5)'}}>{subcategory.subcategory}</a>
-           </DropdownItem>)}
+           <DropdownItem href="/business/Business Plans">
+           <a style={{color: 'rgba(0, 0, 0, 0.5)'}}>Business Plans</a>
+           </DropdownItem>
+           <DropdownItem href="/business/Branding Services">
+           <a style={{color: 'rgba(0, 0, 0, 0.5)'}}>Branding Services</a>
+           </DropdownItem>
+           <DropdownItem href="/business/Legal Consulting">
+           <a style={{color: 'rgba(0, 0, 0, 0.5)'}}>Legal Consulting</a>
+           </DropdownItem>
+           <DropdownItem href="/business/Financial Consulting">
+           <a style={{color: 'rgba(0, 0, 0, 0.5)'}}>Financial Consulting</a>
+           </DropdownItem>
+           <DropdownItem href="/business/Business Tips">
+           <a style={{color: 'rgba(0, 0, 0, 0.5)'}}>Business Tips</a>
+           </DropdownItem>
+           <DropdownItem href="/business/Presentations">
+           <a style={{color: 'rgba(0, 0, 0, 0.5)'}}>Presentations</a>
+           </DropdownItem>
         </DropdownMenu>
       </Dropdown>
              
@@ -446,10 +411,24 @@ import {print} from 'graphql';
                 </NavItem>
         </DropdownToggle>
         <DropdownMenu>
-            {this.state.subcategories.map((subcategory, index) => 
-           <DropdownItem key={subcategory.subcategory} href={"/writingandtranslation/"+ subcategory.subcategory}>
-           <a style={{color: 'rgba(0, 0, 0, 0.5)'}}>{subcategory.subcategory}</a>
-           </DropdownItem>)}
+           <DropdownItem href="/writingandtranslation/Articles & Blog Posts">
+           <a style={{color: 'rgba(0, 0, 0, 0.5)'}}>Articles & Blog Posts</a>
+           </DropdownItem>
+           <DropdownItem href="/writingandtranslation/Resumes & Cover Letters">
+           <a style={{color: 'rgba(0, 0, 0, 0.5)'}}>Resumes & Cover Letters</a>
+           </DropdownItem>
+           <DropdownItem href="/writingandtranslation/Website Content">
+           <a style={{color: 'rgba(0, 0, 0, 0.5)'}}>Website Content</a>
+           </DropdownItem>
+           <DropdownItem href="/writingandtranslation/Technical Writing">
+           <a style={{color: 'rgba(0, 0, 0, 0.5)'}}>Technical Writing</a>
+           </DropdownItem>
+           <DropdownItem href="/writingandtranslation/Press Releases">
+           <a style={{color: 'rgba(0, 0, 0, 0.5)'}}>Press Releases</a>
+           </DropdownItem>
+           <DropdownItem href="/writingandtranslation/Legal Writing">
+           <a style={{color: 'rgba(0, 0, 0, 0.5)'}}>Legal Writing</a>
+           </DropdownItem>
         </DropdownMenu>
       </Dropdown>
 
@@ -460,10 +439,24 @@ import {print} from 'graphql';
                 </NavItem>
         </DropdownToggle>
         <DropdownMenu>
-            {this.state.subcategories.map((subcategory, index) => 
-           <DropdownItem key={subcategory.subcategory} href={"/funandlifestyle/"+ subcategory.subcategory}>
-           <a style={{color: 'rgba(0, 0, 0, 0.5)'}}>{subcategory.subcategory}</a>
-           </DropdownItem>)}
+           <DropdownItem href="/funandlifestyle/Greeting Cards & Videos">
+           <a style={{color: 'rgba(0, 0, 0, 0.5)'}}>Greeting Cards & Videos</a>
+           </DropdownItem>
+           <DropdownItem href="/funandlifestyle/Online Lessons">
+           <a style={{color: 'rgba(0, 0, 0, 0.5)'}}>Online Lessons</a>
+           </DropdownItem>
+           <DropdownItem href="/funandlifestyle/Nutrition">
+           <a style={{color: 'rgba(0, 0, 0, 0.5)'}}>Nutrition</a>
+           </DropdownItem>
+           <DropdownItem href="/funandlifestyle/Workout Plans">
+           <a style={{color: 'rgba(0, 0, 0, 0.5)'}}>Workout Plans</a>
+           </DropdownItem>
+           <DropdownItem href="/funandlifestyle/Business">
+           <a style={{color: 'rgba(0, 0, 0, 0.5)'}}>Business</a>
+           </DropdownItem>
+           <DropdownItem href="/funandlifestyle/Viral Videos">
+           <a style={{color: 'rgba(0, 0, 0, 0.5)'}}>Viral Videos</a>
+           </DropdownItem>
         </DropdownMenu>
       </Dropdown>
               </Nav>
