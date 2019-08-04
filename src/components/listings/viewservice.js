@@ -510,11 +510,17 @@ if(serviceReviews.length!=0){///////check if user has reviewed service already
       ///////////////calculating the avergage service rating
       var totalRatings = this.state.serviceReviews.reduce((acc, review) => acc + review.rating, 0);
       var divisor = this.state.serviceReviews.length;
-      var averageServiceRating = (totalRatings/divisor);
+      var averageServiceRating = 0;
+      if(this.state.serviceReviews.length!=0){
+        averageServiceRating = (totalRatings/divisor);
+      };
       //////////////calculating the avergage seller rating
       var totalSellerRatings = this.state.getSellerRating.reduce((acc, review) => acc + review.rating, 0);
       var sellerDivisor = this.state.getSellerRating.length;
-      var averageSellerRating = (totalSellerRatings/sellerDivisor);
+      var averageSellerRating = 0;
+      if(this.state.getSellerRating.length!=0){
+        averageSellerRating = (totalSellerRatings/sellerDivisor);
+      };
       //////////////time passed since user joined
       var today = new Date();
         var date = today.getFullYear()+'/'+(today.getMonth()+1)+'/'+today.getDate();
