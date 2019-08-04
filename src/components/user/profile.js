@@ -8,7 +8,7 @@ import {GET_USER, GET_SERVICES_BY_USERID, GET_ORDERS_IN_QUEUE, GET_SELLER_RATING
 import {ADD_PROFILE_VIEW} from '../graphql/MutationResolver';
 import axios from 'axios';
 import {print} from 'graphql';
-import StarRatings from 'react-star-ratings';
+// import StarRatings from 'react-star-ratings';
 import { FaRegEnvelope, FaFly } from 'react-icons/fa';
 import {BACKEND_URL} from '../backendurl';
 import MessagePopup from '../listings/messagepopup';
@@ -164,13 +164,13 @@ var servicesLength=this.state.userServices.length;
 <br/>
         <img className="profilepicture" onError={this.userIcon} src={profileimage} style={{width: '100px', height: '100px', borderRadius: '50%'}}/>
         <h5>{user.username}</h5>
-        <StarRatings
+        {/* <StarRatings
           rating={averageSellerRating}
           starRatedColor="rebeccapurple"
           numberOfStars={5}
           starDimension="15px"
           name='userrating'
-        /> 
+        />  */}
         <h6 className="lightgreytext"><span className="purpletext">{averageSellerRating}</span> from {this.state.getSellerRating.length} reviews</h6>
         <h6>{ordersInQueue} Orders in Queue</h6>
         <MessagePopup seller={user.id}/>
