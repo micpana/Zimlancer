@@ -13,6 +13,7 @@ import { runInThisContext } from 'vm';
 import moment from 'moment';
 import { withCookies, Cookies } from 'react-cookie';
 import { instanceOf } from 'prop-types';
+import EcocashImg from '../images/ecocash.png'
 
 
 
@@ -56,7 +57,7 @@ return<Modal open={open} onClose={this.onCloseModal} center>
     </Modal>  
   }else{
     return<Modal open={open} onClose={this.onCloseModal} center>
-    <h5>Choose a payment option</h5>
+      <img src={EcocashImg} />
     <InputGroup>
 <Input  placeholder="Enter Ecocash Number" type="number" name="ecocash" id="ecocash" 
 value={this.state.ecocash} onChange={this.handleChange} />
