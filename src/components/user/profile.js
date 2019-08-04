@@ -45,7 +45,7 @@ getSellerRating: []
       var dateTime = date+' '+time;
       axios.post(GRAPHQL_BASE_URL, {//////add profile view
         query: print(ADD_PROFILE_VIEW), variables: {
-          userid: this.props.match.params.userid,
+          userid: this.props.id,
           viewerid: cookies.get('userId'),
           date: dateTime
         }
@@ -56,7 +56,7 @@ getSellerRating: []
       console.log(error.response)
   });//////ends here
       axios.post(GRAPHQL_BASE_URL, {/////////////get user details
-          query: print(GET_USER), variables: {id: this.props.match.params.userid}
+          query: print(GET_USER), variables: {id: this.props.id}
       }).then((result) => {
           this.setState({userDetails: result.data.data.getUser});
 
@@ -64,7 +64,7 @@ getSellerRating: []
         console.log(error.response)
     });////////ends here
     axios.post(GRAPHQL_BASE_URL, {///////get all services by the user
-        query: print(GET_SERVICES_BY_USERID), variables: {id: this.props.match.params.userid}
+        query: print(GET_SERVICES_BY_USERID), variables: {id: this.props.id}
     }).then((result) => {
         this.setState({userServices: result.data.data.getServicesByUserId});
 
@@ -72,7 +72,7 @@ getSellerRating: []
       console.log(error.response)
   });///////////////////ends here
   axios.post(GRAPHQL_BASE_URL, {/////////////////get orders in queue
-    query: print(GET_ORDERS_IN_QUEUE), variables: {sellerid: this.props.match.params.userid, completed: "false"}
+    query: print(GET_ORDERS_IN_QUEUE), variables: {sellerid: this.props.id, completed: "false"}
 }).then((result) => {
     this.setState({ordersInQueue: result.data.data.getOrdersInQueue});
 
@@ -80,7 +80,7 @@ getSellerRating: []
   console.log(error.response)
 });///////////ends here
 axios.post(GRAPHQL_BASE_URL, {/////////////////get seller rating
-  query: print(GET_SELLER_RATING), variables: {sellerid: this.props.match.params.userid}
+  query: print(GET_SELLER_RATING), variables: {sellerid: this.props.id}
 }).then((result) => {
   this.setState({getSellerRating: result.data.data.getSellerRating});
 

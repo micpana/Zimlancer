@@ -29,6 +29,7 @@ import { instanceOf } from 'prop-types';
 import ReactGA from 'react-ga';
 import Navbar from './components/header/navbar'
 import Categoriesbar from './components/header/categoriesbar'
+import Ptest from './components/user/ptest'
 
 
 import { BrowserRouter, Route, Switch, withRouter } from 'react-router-dom';
@@ -64,7 +65,7 @@ ReactGA.pageview(window.location.pathname + window.location.search);
                         <Route path='/funandlifestyle/:subcategory' exact={true} component={Services}/>
                         <Route path='/writingandtranslation/:subcategory' exact={true} component={Services}/>
                         <Route path='/:maincategory/:subcategory/:serviceid' exact={true} component={ViewService}/>
-                        <Route path='/profile/:userid' exact={true} component={Profile}/>
+                        <Route path='/profile/:userid' exact={true} component={Ptest}/>
                         <Route path='/upload/' exact={true} component={Upload}/>
                         <Route path='/registration/' exact={true} component={Registration}/>
                         <Route path='/login/' exact={true} component={Login}/>
