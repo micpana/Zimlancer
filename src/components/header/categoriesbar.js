@@ -350,7 +350,7 @@ import {print} from 'graphql';
     render() {
       return (
         // <div className="catnav">
-          <Navbar color="light" light expand="md" sticky="top">
+          <Navbar color="light" light expand="md">
             <NavbarToggler onClick={this.toggle} />
             <Collapse isOpen={this.state.isOpen} navbar>
               <Nav className="categoriesnav" navbar>

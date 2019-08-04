@@ -8,7 +8,7 @@ import {GET_USER, GET_SERVICES_BY_USERID, GET_ORDERS_IN_QUEUE, GET_SELLER_RATING
 import {ADD_PROFILE_VIEW} from '../graphql/MutationResolver';
 import axios from 'axios';
 import {print} from 'graphql';
-// import StarRatings from 'react-star-ratings';
+import StarRatings from 'react-star-ratings';
 import { FaRegEnvelope, FaFly } from 'react-icons/fa';
 import {BACKEND_URL} from '../backendurl';
 import MessagePopup from '../listings/messagepopup';
@@ -45,7 +45,7 @@ getSellerRating: []
       var dateTime = date+' '+time;
       axios.post(GRAPHQL_BASE_URL, {//////add profile view
         query: print(ADD_PROFILE_VIEW), variables: {
-          userid: this.props.id,
+          userid: this.props.match.params.userid,
           viewerid: cookies.get('userId'),
           date: dateTime
         }
@@ -56,7 +56,7 @@ getSellerRating: []
       console.log(error.response)
   });//////ends here
       axios.post(GRAPHQL_BASE_URL, {/////////////get user details
-          query: print(GET_USER), variables: {id: this.props.id}
+          query: print(GET_USER), variables: {id: this.props.match.params.userid}
       }).then((result) => {
           this.setState({userDetails: result.data.data.getUser});
 
@@ -64,7 +64,7 @@ getSellerRating: []
         console.log(error.response)
     });////////ends here
     axios.post(GRAPHQL_BASE_URL, {///////get all services by the user
-        query: print(GET_SERVICES_BY_USERID), variables: {id: this.props.id}
+        query: print(GET_SERVICES_BY_USERID), variables: {id: this.props.match.params.userid}
     }).then((result) => {
         this.setState({userServices: result.data.data.getServicesByUserId});
 
@@ -72,7 +72,7 @@ getSellerRating: []
       console.log(error.response)
   });///////////////////ends here
   axios.post(GRAPHQL_BASE_URL, {/////////////////get orders in queue
-    query: print(GET_ORDERS_IN_QUEUE), variables: {sellerid: this.props.id, completed: "false"}
+    query: print(GET_ORDERS_IN_QUEUE), variables: {sellerid: this.props.match.params.userid, completed: "false"}
 }).then((result) => {
     this.setState({ordersInQueue: result.data.data.getOrdersInQueue});
 
@@ -80,7 +80,7 @@ getSellerRating: []
   console.log(error.response)
 });///////////ends here
 axios.post(GRAPHQL_BASE_URL, {/////////////////get seller rating
-  query: print(GET_SELLER_RATING), variables: {sellerid: this.props.id}
+  query: print(GET_SELLER_RATING), variables: {sellerid: this.props.match.params.userid}
 }).then((result) => {
   this.setState({getSellerRating: result.data.data.getSellerRating});
 
@@ -122,7 +122,12 @@ var servicesLength=this.state.userServices.length;
   //////////////calculating the avergage seller rating
   var totalSellerRatings = this.state.getSellerRating.reduce((acc, review) => acc + review.rating, 0);
   var sellerDivisor = this.state.getSellerRating.length;
-  var averageSellerRating = (totalSellerRatings/sellerDivisor);
+  var averageSellerRating = 0;
+
+  if(this.state.getSellerRating.length!=0){
+    averageSellerRating = (totalSellerRatings/sellerDivisor)
+  };
+  
    //////////////time passed since user joined
    var today = new Date();
    var date = today.getFullYear()+'/'+(today.getMonth()+1)+'/'+today.getDate();
@@ -164,13 +169,13 @@ var servicesLength=this.state.userServices.length;
 <br/>
         <img className="profilepicture" onError={this.userIcon} src={profileimage} style={{width: '100px', height: '100px', borderRadius: '50%'}}/>
         <h5>{user.username}</h5>
-        {/* <StarRatings
+        <StarRatings
           rating={averageSellerRating}
           starRatedColor="rebeccapurple"
           numberOfStars={5}
           starDimension="15px"
           name='userrating'
-        />  */}
+        /> 
         <h6 className="lightgreytext"><span className="purpletext">{averageSellerRating}</span> from {this.state.getSellerRating.length} reviews</h6>
         <h6>{ordersInQueue} Orders in Queue</h6>
         <MessagePopup seller={user.id}/>
