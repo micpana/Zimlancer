@@ -125,7 +125,7 @@ import { instanceOf } from 'prop-types';
         const ownClicks = this.state.referralClicks.filter(click => click.referredby == this.state.userDetails.username);
         const clicksToday = this.state.referralClicks.filter(click => click.date == date);
         let port = (window.location.port ? ':' + window.location.port : '');
-        var referralLink = ('http://' + window.location.hostname + port + '/ref/' +  this.state.userDetails.username);
+        var referralLink = ('https://' + window.location.hostname + port + '/ref/' +  this.state.userDetails.username);
         return(<div>
             <Container>
         <h6>Referral System</h6>
