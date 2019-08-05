@@ -234,7 +234,7 @@ if(this.state.serviceDetails.imagepath2!=null&&this.state.serviceDetails.imagepa
          this.ServiceImages = () =>{
           const image= BACKEND_URL+"images/services/"+ this.state.imageOnDisplay
 return<div>
-        <img className="serviceimage" src={image} style={{maxHeight: '500px'}}/><br/>
+        <img className="serviceimage" src={image} style={{maxWidth: '500px'}}/><br/>
 <this.RowWithImagesAvailable/>
         <br/>
 </div>

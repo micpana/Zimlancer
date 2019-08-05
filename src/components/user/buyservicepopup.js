@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {Row, CardDeck, Col,  Card, CardImg, CardText, CardBody,
   CardTitle, CardSubtitle, Button, CardGroup, Label, InputGroup, InputGroupAddon, Input} from 'reactstrap';
 import {GRAPHQL_BASE_URL} from '../graphql/BaseUrlComponent';
-import {SEND_MESSAGE} from '../graphql/MutationResolver';
+import {} from '../graphql/MutationResolver';
 import axios from 'axios';
 import {print} from 'graphql';
 import StarRatings from 'react-star-ratings';
@@ -79,7 +79,7 @@ var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds(
 var dateTime = date+' '+time;
       e.preventDefault()
         axios.post(GRAPHQL_BASE_URL, {
-          query: print(SEND_MESSAGE), variables: {
+          query: print(), variables: {
        
           }
       }).then((result) => {
