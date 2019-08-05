@@ -7,7 +7,7 @@ import Short from '../images/categories/videoandanimation/short.jpg'
 import Spoke from '../images/categories/videoandanimation/spoke.jpg'
 import Videoo from '../images/categories/videoandanimation/video.jpg'
 import Visual from '../images/categories/videoandanimation/visual.jpg'
-import Whiteboard from '../images/categories/videoandanimation/whiteboard.png'
+import Whiteboard from '../images/categories/videoandanimation/whiteboard.jpg'
 import {FaMoneyBillAlt} from 'react-icons/fa';
 import { SocialIcon } from 'react-social-icons';
 import ReferAndEarn from '../images/referandearn.png'
