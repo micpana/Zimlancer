@@ -1,4 +1,4 @@
-# Zimlancer
+# Zimlancer - 2019
 
 Zimlancer is a freelance services marketplace designed for the Zimbabwean community. It allows freelancers to showcase their skills and services, and enables clients to get work done efficiently through project listings or on-demand service browsing.
 
